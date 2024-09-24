@@ -6,6 +6,7 @@ import ProductIntro from "@component/products/ProductIntro";
 import ProductView from "@component/products/ProductView";
 import Notification from "@component/Notification";
 import { useSearchParams } from 'next/navigation'
+import { defaults } from "config/default";
 
 // ==============================================================
 interface Props {
@@ -22,7 +23,7 @@ const ProductDetails = ({ params }: Props) => {
   const [response, setResponse] = useState<any>(null);
   const [notificatonData, setNotificationData] = useState({ 'status': false });
   const fetchProductInfo = async () => {
-   
+ 
     try {
       const result = await axios({
         url: apiList.PRODUCT_DETAILS + (params.slug as string),
@@ -60,6 +61,8 @@ const ProductDetails = ({ params }: Props) => {
       } catch (error) {
         console.error("Error parsing location response:", error);
       }
+    }else{
+      setStoreCode(defaults.storecode);
     }
 
     if (userData) {
@@ -68,6 +71,7 @@ const ProductDetails = ({ params }: Props) => {
   }, []);
 
   useEffect(() => {
+   
     if (storeCode && token) {
       fetchProductInfo();
     }
@@ -87,7 +91,7 @@ const ProductDetails = ({ params }: Props) => {
     });
 
   }
-
+ 
 
   return (
     <Fragment>
@@ -112,8 +116,7 @@ const ProductDetails = ({ params }: Props) => {
         setNotificationData={setNotificationData}
         description={datas.description}
       /> : ''}
-
-      <ProductView
+{!!datas && datas? <ProductView
         name={datas.name}
         brand={datas.brand}
         description={datas.description}
@@ -123,7 +126,8 @@ const ProductDetails = ({ params }: Props) => {
         setNotificationData={setNotificationData}
         setSelectedVariantId={setSelectedVariantId}
 
-      />
+      />:null}
+     
     </Fragment>
   );
 };
