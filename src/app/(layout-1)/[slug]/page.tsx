@@ -7,6 +7,8 @@ import useAxios from "custom/useAxios";
 import Grid from "@component/grid/Grid";
 import Typography from "@component/Typography";
 import Container from "@component/Container";
+import Image from "@component/Image";
+import Divider from "@component/Divider";
 // ==============================================================
 interface Props {
     params: { slug: string };
@@ -30,18 +32,24 @@ export default function Pages({ params }: Props) {
 
     return (
         <Fragment>
-            <Container my="1.5rem" height="100vh">
+            <Container minHeight="100vh">
                 <Grid container spacing={6}>
                     {!!pageResponse && pageResponse.data ?
                         <Grid item xs={12} lg={12} md={12} sm={12}>
-                            <Typography fontWeight="bold" fontSize="30px">
+                            <Image src={pageResponse.data.image} width="100%" maxHeight={400} mt={20}/>
+                         <br/>
+                         <br/>
+                            <Typography fontWeight="bold" fontSize="30px" mt={20}>
 
                                 {pageResponse.data.title.toUpperCase()}
                             </Typography>
-
-                            <Typography fontWeight="normal" fontSize="20px">
+                            <Divider mt={2}/>
+                            <Typography fontWeight="normal" fontSize="14px" mt={10} mb={20}>
 
                                 {pageResponse.data.description}
+                              
+
+                             
                             </Typography>
                         </Grid>
                         : null}
