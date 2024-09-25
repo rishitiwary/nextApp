@@ -16,6 +16,7 @@ import { IconButton } from "@component/buttons";
 import { currency, getTheme, isValidProp } from "@utils/utils";
 import { useAppContext } from "@context/app-context";
 import { Fragment } from "react";
+import Grid from "@component/grid/Grid";
 
 // STYLED COMPONENTS
 const Wrapper = styled.div.withConfig({
@@ -149,6 +150,7 @@ export default function ProductCard7(props: ProductCard7Props) {
     <Fragment>
       {!!cartItem?.qty && (
         <Wrapper {...others}>
+          <Grid item xs={4} lg={2} sm={4}>
           <Link href={`/product/${slug}`}>
             <LazyImage
               alt={name}
@@ -157,6 +159,8 @@ export default function ProductCard7(props: ProductCard7Props) {
               src={imgUrl || "/logo.png"}
             />
           </Link>
+          </Grid>
+          <Grid item xs={8} lg={10} sm={8}>
           <FlexBox
             width="100%"
             minWidth="0px"
@@ -170,11 +174,7 @@ export default function ProductCard7(props: ProductCard7Props) {
               {size}
             </Link>
 
-            {/* <Box position="absolute" right="1rem" top="1rem">
-          <IconButton padding="4px" ml="12px" onClick={handleCartAmountChange(0)}>
-            <Icon size="1.25rem">close</Icon>
-          </IconButton>
-        </Box> */}
+           
 
             <FlexBox justifyContent="space-between" alignItems="flex-end">
               <FlexBox flexWrap="wrap" alignItems="center">
@@ -226,6 +226,7 @@ export default function ProductCard7(props: ProductCard7Props) {
 
             </FlexBox>
           </FlexBox>
+          </Grid>
         </Wrapper >
       )}
     </Fragment>

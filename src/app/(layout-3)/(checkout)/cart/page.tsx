@@ -67,9 +67,7 @@ const Cart = () => {
   const [loader, setLoader] = useState(false);
   const handleClose = () => setShow(false);
 
-  // if(token==null || token==''){
-  //     window.location.replace('/login');
-  // }
+ 
 
   const userInfo = !!state.userInfo && JSON.parse(state.userInfo)?.data;
 
@@ -96,17 +94,12 @@ const Cart = () => {
   }, [state.cart]);
 
   const getTotalSavingPrice: any = useCallback(() => {
-
     return state.cart ? state.cart.reduce((acc, item) => acc + item.mrp * item.qty, 0) : 0;
   }, [state.cart]);
-
 
   //fetch cart data
 
   useEffect(() => {
-
-
-
     const locationResponse = localStorage.getItem('locationResponse');
     const userData = localStorage.getItem('userData');
     const metaData = localStorage.getItem('metaData');

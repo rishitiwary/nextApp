@@ -8,6 +8,7 @@ import Typography from "@component/Typography";
 
 import { currency, getTheme, isValidProp } from "@utils/utils";
 import { Fragment } from "react";
+import Grid from "@component/grid/Grid";
 
 // STYLED COMPONENTS
 const Wrapper = styled.div.withConfig({
@@ -76,7 +77,7 @@ export default function OfferProduct(props: GoodiesProps) {
                 <Typography fontWeight={600}>Limited period offers</Typography>
             </FlexBox>
             <Wrapper {...others} >
-
+<Grid item xs={4} lg={2} sm={2}>
                 <LazyImage
                     alt={name}
                     width={110}
@@ -84,6 +85,8 @@ export default function OfferProduct(props: GoodiesProps) {
                     src={imgUrl || "/logo.png"}
 
                 />
+                </Grid>
+                <Grid item xs={8} lg={10} sm={10}>
                 <FlexBox
                     width="100%"
                     minWidth="0px"
@@ -120,7 +123,7 @@ export default function OfferProduct(props: GoodiesProps) {
 
                     </FlexBox>
                 </FlexBox>
-
+                </Grid>
             </Wrapper >
 
         </Fragment>

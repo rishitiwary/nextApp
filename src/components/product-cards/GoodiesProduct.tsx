@@ -8,6 +8,7 @@ import Typography from "@component/Typography";
 
 import { currency, getTheme, isValidProp } from "@utils/utils";
 import { Fragment } from "react";
+import Grid from "@component/grid/Grid";
 
 // STYLED COMPONENTS
 const Wrapper = styled.div.withConfig({
@@ -62,14 +63,17 @@ export default function GoodiesProduct(props: GoodiesProps) {
     return (
         <Fragment >
             <Wrapper {...others} style={{backgroundColor:'#FBFFDC'}}>
+                <Grid item xs={4} lg={2} sm={2}>
                 <LazyImage
                     alt={name}
-                    width={100}
-                    height={100}
+                    width={110}
+                    height={110}
                     margin={2}
                     src={imgUrl || "/logo.png"}
                 
                 />
+                </Grid>
+                <Grid item xs={8} lg={10} sm={10}>
                 <FlexBox
                     width="100%"
                     minWidth="0px"
@@ -100,6 +104,7 @@ export default function GoodiesProduct(props: GoodiesProps) {
 
                     </FlexBox>
                 </FlexBox>
+                </Grid>
             </Wrapper >
 
         </Fragment>
