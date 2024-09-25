@@ -179,7 +179,7 @@ export default function Login() {
     <Grid item xs={12} lg={12} md={12}
       alignContent="center"
     >
-      {canResend ? '' : `in ${timer} seconds`}
+      
       <StyledRoot mx="auto" my="2rem" boxShadow="large" borderRadius={8}
         style={{ background: '#298F52' }}
       >
