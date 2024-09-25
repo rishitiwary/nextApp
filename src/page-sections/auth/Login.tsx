@@ -20,6 +20,7 @@ import { useAppContext } from "@context/app-context";
 import Grid from "@component/grid/Grid";
 import { alignItems } from "styled-system";
 import Image from "@component/Image";
+import OTPScreen from "./OTPScreen";
 
 
 export default function Login() {
@@ -30,12 +31,22 @@ export default function Login() {
   const [defaultAddress, setAddress] = useState([]);
   const [storeCode, setStoreCode] = useState('');
   const [token, setToken] = useState('');
-
+  const [timer, setTimer] = useState(30);
+  const [canResend, setCanResend] = useState(false);
   const { response: cartResponse, error: cartError, loading: cartLoading, fetchData: cartData } = useAxios();
   const { response: locationResponse, error: locationError, loading: locationLoading, fetchData: locationFetchData } = useAxios();
   const { response: userInfoResponse, error: userInfoError, loading: userInfoLoading, fetchData: userInfoData } = useAxios();
   const { response: loginResponse, error: loginError, loading: loginLoading, fetchData: loginFetchData } = useAxios();
   const { response: otpVerificationResponse, error: otpVerificationError, loading: otpVerificationLoading, fetchData: otpVerificationFetchData } = useAxios();
+
+  useEffect(() => {
+    if (timer > 0) {
+      const countdown = setTimeout(() => setTimer(timer - 1), 1000);
+      return () => clearTimeout(countdown);
+    } else {
+      setCanResend(true); // Enable the resend button after timer reaches 0
+    }
+  }, [timer]);
 
   const initialValues = { number: "", deviceType: "web" };
 
@@ -45,14 +56,11 @@ export default function Login() {
       .max(10, 'Must be exactly 10 digits'),
   });
 
-  // useEffect(() => {
-  //   if (state.userData !== null) {
-  //     router.push('/profile');
-  //   }
-  // }, []);
+
 
   const handleFormSubmit = async (values: any) => {
-
+    setCanResend(false);
+    setTimer(30);
     try {
       const datas = {
         "number": values.number,
@@ -93,9 +101,6 @@ export default function Login() {
     }
   };
   //end find nearest store
-
-
-
 
   //set userinfo
   const handleFetchData = async (token: any) => {
@@ -172,90 +177,115 @@ export default function Login() {
 
   return (
     <Grid item xs={12} lg={12} md={12}
-    
-   
-   alignContent="center"
+      alignContent="center"
     >
-    <StyledRoot mx="auto" my="2rem" boxShadow="large" borderRadius={8}
-    style={{background: '#298F52'}}
-    >
-      <Box>
-        <form className="content" onSubmit={handleSubmit}>
-          <Typography textAlign="center" mb="0.5rem">
-            
-            <Image src="/assets/images/logoWhite.png" height={80}/>
+      {canResend ? '' : `in ${timer} seconds`}
+      <StyledRoot mx="auto" my="2rem" boxShadow="large" borderRadius={8}
+        style={{ background: '#298F52' }}
+      >
+        <Box>
 
-          </Typography>
-
-          <H5 fontWeight="400" fontSize="16px" color="#FFFFFF" textAlign="center" mb="2.25rem">
-          Online Groceries Shopping
-          </H5>
-
-          <h4 style={{ textTransform: 'capitalize' }}>
-            {otpVerificationResponse !== null && otpVerificationResponse.status === false ? otpVerificationResponse.error.message : loginResponse !== null ? loginResponse.message : ''}
+          <form className="content" onSubmit={handleSubmit}>
 
 
+            <Typography textAlign="center" mb="0.5rem">
 
-          </h4>
-          {(loginResponse !== null && loginResponse.status) ? <>
-            {/* enter otp form */}
-            <FlexBox justifyContent="center" bg="gray.200" py="19px">
-              <OtpInput
-                value={otp}
-                onChange={setOtp}
-                numInputs={6}
-                renderSeparator={<span> </span>}
-                inputType="tel"
-                containerStyle={{ display: 'unset' }}
-                inputStyle={{ width: "3rem", height: "3.5rem", borderRadius: '10px', border: '1px solid black', margin: '2px' }}
-                renderInput={(props) => <input {...props} className='otp-input' />}
+              <Image src="/assets/images/logoWhite.png" height={40}  />
+
+            </Typography>
+
+            <Typography fontWeight="400" fontSize="16px" color="#FFFFFF" textAlign="center" mb="2rem">
+              Online Groceries Shopping
+            </Typography>
+
+            <Typography style={{ textTransform: 'capitalize' }} fontSize={15} color="#ffffff" mb={2}>
+
+              {otpVerificationResponse !== null && otpVerificationResponse.status === false ? otpVerificationResponse.error.message : loginResponse !== null ? loginResponse.message : ''}
+            </Typography>
+            {(loginResponse !== null && loginResponse.status) ? <>
+              {/* enter otp form */}
+              <FlexBox justifyContent="center" bg="gray.200" py="19px">
+
+                <OtpInput
+                  value={otp}
+                  onChange={setOtp}
+                  numInputs={6}
+                  renderSeparator={<span>-</span>}
+                  inputType="tel"
+                  containerStyle={{ display: 'unset' }}
+                  inputStyle={{ width: "3rem", height: "3.2rem", borderRadius: '10px', border: '1px solid black', margin: '2px' }}
+                  renderInput={(props) => <input {...props} className='otp-input' />}
+                />
+
+
+              </FlexBox>
+              <FlexBox justifyContent="left">
+                <Typography mt={1} color="#FFFFFF">
+                  <Button
+                    type="submit"
+                    disabled={!canResend}
+                    style={{
+                      backgroundColor: 'transparent',
+                      color: canResend ? '#FFFFFF' : '#aaa',
+                      textDecoration: canResend ? 'underline' : 'none',
+                      border: 'none',
+                      cursor: canResend ? 'pointer' : 'not-allowed',
+                      padding: 0,
+                      fontSize: 'inherit'
+                    }}
+                  >
+                    Resend OTP {" "} {canResend ? '' : `in ${timer} seconds`}
+                  </Button>
+                  
+                </Typography>
+              </FlexBox>
+              <Button mt="1rem" mb="1rem" variant="contained" color="default" borderRadius={20} type="button" onClick={handleVerify} fullwidth>
+                <Typography color="#FFFFFF">
+                  Verify OTP
+                </Typography>
+              </Button>
+
+            </> : <>
+              {/* enter mobile number */}
+
+              <TextField
+                fullwidth
+                mb="0.75rem"
+                name="number"
+                type="text"
+                onBlur={handleBlur}
+                value={values.number}
+                onChange={handleChange}
+                placeholder="91XXXXXXXX"
+                label="Phone Number"
+                errorText={touched.number && errors.number ? <span style={{ color: '#FFFFFF', textTransform: 'capitalize' }}>{errors.number}</span> : null}
+                color="#FFFFFF"
+
               />
 
-            </FlexBox>
-            <Button mb="1.65rem" variant="contained" color="success" type="button" onClick={handleVerify} fullwidth>
-              Verify OTP
-            </Button>
-          </> : <>
-            {/* enter mobile number */}
+              <Button mb="1.65rem" variant="contained" color="default" borderRadius={10} type="submit" fullwidth>
+                <Typography color="#FFFFFF">Login with phone</Typography>
+              </Button>
 
-            <TextField
-              fullwidth
-              mb="0.75rem"
-              name="number"
-              type="text"
-              onBlur={handleBlur}
-              value={values.number}
-              onChange={handleChange}
-              placeholder="91XXXXXXXX"
-              label="Phone Number"
-              errorText={touched.number && errors.number}
-              color="#FFFFFF"
-
-            />
-
-            <Button mb="1.65rem" variant="contained" color="default" borderRadius={10} type="submit" fullwidth>
-              <Typography color="#FFFFFF">Login with phone</Typography>
-            </Button>
-            
-          </>
-          }
+            </>
+            }
 
 
-        </form>
+          </form>
 
-        <FlexBox justifyContent="center" bg="gray.200" py="19px">
-          <Link href="/terms-and-conditions">
-          <SemiSpan textAlign="center" pl={4}> By continuing, you agree to our</SemiSpan>
-          <br/>
-            <SemiSpan>Agree to our term & conditions policies.</SemiSpan>
+          <FlexBox justifyContent="center" bg="gray.200" py="19px">
+            <Link href="/terms-and-conditions">
+              <SemiSpan textAlign="center" pl={4}> By continuing, you agree to our</SemiSpan>
+              <br />
+              <SemiSpan>Agree to our term & conditions policies.</SemiSpan>
 
-            {/* <H6 ml="0.5rem" borderBottom="1px solid" borderColor="gray.900">
+              {/* <H6 ml="0.5rem" borderBottom="1px solid" borderColor="gray.900">
             Reset It
           </H6> */}
-          </Link>
-        </FlexBox>
-      </Box>
-    </StyledRoot>
+            </Link>
+          </FlexBox>
+        </Box>
+      </StyledRoot>
     </Grid>
   );
 }

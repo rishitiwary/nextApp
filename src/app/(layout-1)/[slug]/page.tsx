@@ -13,17 +13,10 @@ interface Props {
     page: { pageNo: string };
 }
 // ==============================================================
-
 export default function Pages({ params }: Props) {
-
-
     const { response: pageResponse, error: pageError, loading: pageLoading, fetchData: FetchData } = useAxios();
-
-
     const fetchData = async () => {
         try {
-
-
             await FetchData({ url: apiList.DYNAMIC_PAGES + params.slug, method: "GET", data: {}, params: null });
 
         } catch (error) {
@@ -31,13 +24,9 @@ export default function Pages({ params }: Props) {
         }
     };
 
-
     useEffect(() => {
         fetchData();
     }, []);
-
-
-
 
     return (
         <Fragment>
