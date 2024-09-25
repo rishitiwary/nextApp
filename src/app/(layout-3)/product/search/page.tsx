@@ -30,9 +30,7 @@ export default function ProductSearchResult({ params }: Props) {
     storeCode = JSON.parse(locationResponse).storecode;
   }
 
-  
   const [resultList, setResultList] = useState<string[]>([]);
-
   const handleSearch = async () => {
     try {
       if (storeCode) {
@@ -49,14 +47,14 @@ export default function ProductSearchResult({ params }: Props) {
       }
     } catch (error) {
       console.log('Error in handleAddToCart:', error);
-      throw error; // Re-throw to handle it in the calling function
+      throw error; 
     }
   }
 
 
   useEffect(() => {
     handleSearch();
-  }, [query]); // Make sure to include inventoryFetchData in the dependency array
+  }, [query]); 
 
 
   return (

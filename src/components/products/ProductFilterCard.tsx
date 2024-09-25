@@ -7,7 +7,7 @@ import Divider from "@component/Divider";
 import FlexBox from "@component/FlexBox";
 import CheckBox from "@component/CheckBox";
 import TextField from "@component/text-field";
-import Image from "next/image";
+import Image from "@component/Image";
 import Typography, { H5, H6, Paragraph, SemiSpan } from "@component/Typography";
 import { useEffect, useState } from "react";
 import Grid from "@component/grid/Grid";
@@ -42,21 +42,29 @@ export default function ProductFilterCard({ subCat, token, storeCode }: Props) {
         {subcategories && subcategories.map((item, index) =>
           <Grid item lg={12} md={12} xs={6}>
           <Card p="25px 27px" m={1} elevation={5} borderRadius={8} key={index}>
+            
             <FlexBox
-              justifyContent="space-between"
+              justifyContent="center"
               alignItems="center"
               cursor="pointer"
               onClick={() => handleClick(item.name)}
             
             >
+              <Grid item lg={4} sm={4} xs={12}>
               <Image
-                height={60}
-                width={60}
+                maxHeight={50}
+                maxWidth={50}
                 src={item.imageUrl}
                 alt={item.name}
                 style={{ borderRadius: 50 }}
               />
-              <SemiSpan style={{ color: 'black' }} p={1}> {item.name}</SemiSpan>
+              </Grid>
+             
+              <Grid item lg={8} sm={8} xs={12}>
+              <SemiSpan style={{ color: 'black' }} pl={2}> {item.name}</SemiSpan>
+              </Grid>
+              
+             
             </FlexBox>
           </Card>
         </Grid>

@@ -68,8 +68,6 @@ export default function SearchResult({ sortOptions, productData,  setNotificatio
 
       <Grid container spacing={6}>
       
-     
-
         <Grid item lg={12} xs={12}>
 
           <ProductGridView products={productData} type="search" setNotificationData={setNotificationData} token={token} storeCode={storeCode} />
