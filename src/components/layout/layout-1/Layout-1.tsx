@@ -16,7 +16,7 @@ export default function ShopLayout({ navbar, children }: Props) {
   
   return (
     <StyledAppLayout>
-      {/* <Topbar /> */}
+      <Topbar />
       <Sticky fixedOn={0} scrollDistance={300}>
         <Header />
       </Sticky>

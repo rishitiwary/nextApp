@@ -15,19 +15,27 @@ import StyledSearchBox from "./styled";
 import axios from "axios";
 import apiList from "@utils/__api__/apiList";
 import { useSearchParams } from "next/navigation";
+import { defaults } from "config/default";
+
 export default function SearchInputWithCategory() {
   const searchParams = useSearchParams()
   const initialQuery = searchParams.get('query') || '';
   const [query, setQuery] = useState(initialQuery);
   const [resultList, setResultList] = useState<string[]>([]);
   const locationResponse = localStorage.getItem('locationResponse');
- 
-  const storeCode:string = !!locationResponse && JSON.parse(locationResponse).storecode;
+  let storeCode='';
+if(locationResponse==null){
+  storeCode=defaults.storecode;
+}else{
+ storeCode=!!locationResponse && JSON.parse(locationResponse).storecode;
+}
+  
   const [page,setPageNo]=useState(1);
 
 
     //call api for storing data into database through api
     const handleSearch = async (value:string) => {
+      
       try {
         if (storeCode) {
           const response = await axios({
@@ -53,13 +61,16 @@ export default function SearchInputWithCategory() {
 
     if (!value){
       setResultList([]);
+      
     } 
     else {
+     
       handleSearch(value);
     }
-  }, 200);
+  }, 100);
 
   const hanldeSearch = useCallback((event: any) => {
+  
     setQuery(event.target.value);
     event.persist();
   
@@ -77,6 +88,7 @@ export default function SearchInputWithCategory() {
     setQuery(item); // Set the selected option to the query state
     setResultList([]); // Clear the results list after selection
   };
+
 
  
   return (

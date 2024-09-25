@@ -16,7 +16,7 @@ export default function ProductGridView({ products,storeCode,token,setNotificati
       <Grid container spacing={6}>
         {products && products.map((item,index) => (
           
-          <Grid item lg={type==='search'?3:4} sm={6} xs={12} key={item.id}>
+          <Grid item lg={type==='search'?3:4} sm={6} xs={6} key={item.id}>
             <ProductCard1
                key={index}
                id={item.id}

@@ -15,6 +15,7 @@ interface Props {
 // ==============================================================
 
 export default function ProductSearchResult({ params }: Props) {
+
   const [storeCode, setStoreCode] = useState('');
   const [token, setToken] = useState('');
   const searchParams = useSearchParams()
@@ -78,6 +79,8 @@ export default function ProductSearchResult({ params }: Props) {
         // Handle parsing errors here
         console.error("Error parsing location response:", error);
       }
+    }else{
+      setStoreCode(defaults.storecode);
     }
 
     if (userData) {

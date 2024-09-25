@@ -23,7 +23,14 @@ export default function ProductSearchResult({ params }: Props) {
   const [notificatonData, setNotificationData] = useState({ 'status': false });
   const [currentPage, setCurrentPage] = useState(1);
   const locationResponse = localStorage.getItem('locationResponse');
-  const storeCode: string = JSON.parse(locationResponse).storecode;
+  let storeCode:string='';
+  if(locationResponse==null){
+    storeCode=defaults.storecode;
+  }else{
+    storeCode = JSON.parse(locationResponse).storecode;
+  }
+
+  
   const [resultList, setResultList] = useState<string[]>([]);
 
   const handleSearch = async () => {

@@ -21,23 +21,26 @@ export default function ViewAll({ params }: Props) {
   const searchParams = useSearchParams()
   const [notificatonData, setNotificationData] = useState({ 'status': false });
   const [currentPage, setCurrentPage] = useState(1);
-  const locationResponse = localStorage.getItem('locationResponse');
-  const storeCode: string = JSON.parse(locationResponse).storecode;
+  const [storeCode, setStoreCode] = useState('');
+
+
   const [resultList, setResultList] = useState<string[]>([]);
 
   const handleViewAll = async () => {
-   const data={
-    "category": params.slug,
-    "bannerId": 0,
-    "isBanner": false,
-    "isExpiry": false
-   }
+   
+    const data = {
+      "category": params.slug,
+      "bannerId": 0,
+      "isBanner": false,
+      "isExpiry": false
+    }
     try {
       if (storeCode) {
+   
         const response = await axios({
           url: `${apiList.PRODUCT_MIX}?page=${currentPage}`,
           method: 'POST',
-          data:data,
+          data: data,
           headers: {
             storecode: storeCode
           }
@@ -52,10 +55,36 @@ export default function ViewAll({ params }: Props) {
     }
   }
 
-  useEffect(() => {
-    handleViewAll();
-  }, []); // Make sure to include inventoryFetchData in the dependency array
 
+  useEffect(() => {
+    const locationResponse = localStorage.getItem('locationResponse');
+    const userData = localStorage.getItem('userData');
+
+    if (locationResponse) {
+      try {
+        const parsedData = JSON.parse(locationResponse);
+        if (parsedData && parsedData.storecode) {
+          setStoreCode(parsedData.storecode);
+        } else {
+          console.error("Location response does not contain 'storecode'");
+        }
+      } catch (error) {
+        console.error("Error parsing location response:", error);
+      }
+    } else {
+    
+      setStoreCode(defaults.storecode);
+    }
+  
+  
+
+  }, []);
+  useEffect(()=>{
+    if(storeCode){
+      handleViewAll();
+    }
+   
+  },[storeCode]);
 
   return (
     <Box pt="20px">

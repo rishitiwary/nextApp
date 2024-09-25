@@ -201,7 +201,7 @@ export default function ProductCard1({
     const addToCart = async () => {
       if (maxQuantity >= quantity) {
         if (limit ? limit >= quantity : true) {
-       
+
 
           dispatch({
             type: "CHANGE_CART_AMOUNT",
@@ -258,9 +258,10 @@ export default function ProductCard1({
               <Image
                 alt={title}
                 src={imgUrl}
-                 fill
+                fill
                 objectFit="contain"
                 className="responsive-image"
+              
               />
             </div>
           </Link>
@@ -284,7 +285,7 @@ export default function ProductCard1({
               </Link>
 
 
-              <FlexBox alignItems="left" justifyContent="space-between" mt="10px">
+              <FlexBox alignItems="left" justifyContent="space-between" mt="5px">
                 <Typography>
                   {value} {unit}
                 </Typography>
@@ -304,11 +305,11 @@ export default function ProductCard1({
           </FlexBox>
 
           {cartItem?.qty > 0 ? <FlexBox
-           marginTop={3}
-           borderRadius={5}
-           borderWidth={1}
-           borderColor="green"
-           borderStyle="solid"
+            marginTop={3}
+            borderRadius={5}
+            borderWidth={1}
+            borderColor="green"
+            borderStyle="solid"
             width="100%"
             alignItems="center"
             flexDirection="row-reverse"
@@ -361,7 +362,7 @@ export default function ProductCard1({
               justifyContent={!!cartItem?.qty ? "space-between" : "flex-start"}>
               <Button
                 size={30}
-               
+
                 width="100%"
                 padding="3px"
                 color="primary"
@@ -373,7 +374,7 @@ export default function ProductCard1({
 
 
             </FlexBox>
-          
+
           }
 
         </div>

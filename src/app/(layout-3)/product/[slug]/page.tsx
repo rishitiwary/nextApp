@@ -7,6 +7,8 @@ import ProductView from "@component/products/ProductView";
 import Notification from "@component/Notification";
 import { useSearchParams } from 'next/navigation'
 import { defaults } from "config/default";
+import Spinner from "@component/Spinner";
+import FlexBox from "@component/FlexBox";
 
 // ==============================================================
 interface Props {
@@ -23,7 +25,7 @@ const ProductDetails = ({ params }: Props) => {
   const [response, setResponse] = useState<any>(null);
   const [notificatonData, setNotificationData] = useState({ 'status': false });
   const fetchProductInfo = async () => {
- 
+
     try {
       const result = await axios({
         url: apiList.PRODUCT_DETAILS + (params.slug as string),
@@ -61,7 +63,7 @@ const ProductDetails = ({ params }: Props) => {
       } catch (error) {
         console.error("Error parsing location response:", error);
       }
-    }else{
+    } else {
       setStoreCode(defaults.storecode);
     }
 
@@ -71,14 +73,14 @@ const ProductDetails = ({ params }: Props) => {
   }, []);
 
   useEffect(() => {
-   
-    if (storeCode && token) {
+
+    if (storeCode) {
       fetchProductInfo();
     }
-  }, [storeCode, token]);
+  }, [storeCode]);
 
   if (!response) {
-    return <div>Loading...</div>;
+    return <div><FlexBox justifyContent="center" height="100vh"><Spinner /></FlexBox></div>;
   }
 
   let totalQuantity: number = 0;
@@ -91,7 +93,7 @@ const ProductDetails = ({ params }: Props) => {
     });
 
   }
- 
+
 
   return (
     <Fragment>
@@ -116,7 +118,7 @@ const ProductDetails = ({ params }: Props) => {
         setNotificationData={setNotificationData}
         description={datas.description}
       /> : ''}
-{!!datas && datas? <ProductView
+      {!!datas && datas ? <ProductView
         name={datas.name}
         brand={datas.brand}
         description={datas.description}
@@ -126,8 +128,8 @@ const ProductDetails = ({ params }: Props) => {
         setNotificationData={setNotificationData}
         setSelectedVariantId={setSelectedVariantId}
 
-      />:null}
-     
+      /> : null}
+
     </Fragment>
   );
 };

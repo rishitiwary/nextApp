@@ -8,7 +8,7 @@ import Box from "@component/Box";
 import FlexBox from "@component/FlexBox";
 import TextField from "@component/text-field";
 import { Button, IconButton } from "@component/buttons";
-import { H3, H5, H6, SemiSpan, Small, Span } from "@component/Typography";
+import Typography, { H3, H5, H6, SemiSpan, Small, Span } from "@component/Typography";
 import useAxios from "custom/useAxios";
 import apiList from "@utils/__api__/apiList";
 import OtpInput from 'react-otp-input';
@@ -17,6 +17,9 @@ import secureLocalStorage from "react-secure-storage";
 import { StyledRoot } from "./styles";
 import { useEffect, useState } from "react";
 import { useAppContext } from "@context/app-context";
+import Grid from "@component/grid/Grid";
+import { alignItems } from "styled-system";
+import Image from "@component/Image";
 
 
 export default function Login() {
@@ -168,16 +171,24 @@ export default function Login() {
 
 
   return (
-    <StyledRoot mx="auto" my="2rem" boxShadow="large" borderRadius={8}>
+    <Grid item xs={12} lg={12} md={12}
+    
+   
+   alignContent="center"
+    >
+    <StyledRoot mx="auto" my="2rem" boxShadow="large" borderRadius={8}
+    style={{background: '#298F52'}}
+    >
       <Box>
         <form className="content" onSubmit={handleSubmit}>
-          <H3 textAlign="center" mb="0.5rem">
-            Welcome To Grozep
+          <Typography textAlign="center" mb="0.5rem">
+            
+            <Image src="/assets/images/logoWhite.png" height={80}/>
 
-          </H3>
+          </Typography>
 
-          <H5 fontWeight="600" fontSize="12px" color="gray.800" textAlign="center" mb="2.25rem">
-            Log in with mobile number
+          <H5 fontWeight="400" fontSize="16px" color="#FFFFFF" textAlign="center" mb="2.25rem">
+          Online Groceries Shopping
           </H5>
 
           <h4 style={{ textTransform: 'capitalize' }}>
@@ -218,11 +229,14 @@ export default function Login() {
               placeholder="91XXXXXXXX"
               label="Phone Number"
               errorText={touched.number && errors.number}
+              color="#FFFFFF"
+
             />
 
-            <Button mb="1.65rem" variant="contained" color="primary" type="submit" fullwidth>
-              Login with phone
+            <Button mb="1.65rem" variant="contained" color="default" borderRadius={10} type="submit" fullwidth>
+              <Typography color="#FFFFFF">Login with phone</Typography>
             </Button>
+            
           </>
           }
 
@@ -230,7 +244,9 @@ export default function Login() {
         </form>
 
         <FlexBox justifyContent="center" bg="gray.200" py="19px">
-          <Link href="/">
+          <Link href="/terms-and-conditions">
+          <SemiSpan textAlign="center" pl={4}> By continuing, you agree to our</SemiSpan>
+          <br/>
             <SemiSpan>Agree to our term & conditions policies.</SemiSpan>
 
             {/* <H6 ml="0.5rem" borderBottom="1px solid" borderColor="gray.900">
@@ -240,5 +256,6 @@ export default function Login() {
         </FlexBox>
       </Box>
     </StyledRoot>
+    </Grid>
   );
 }
