@@ -20,7 +20,6 @@ import { useAppContext } from "@context/app-context";
 import Grid from "@component/grid/Grid";
 import { alignItems } from "styled-system";
 import Image from "@component/Image";
-import OTPScreen from "./OTPScreen";
 
 
 export default function Login() {
@@ -178,6 +177,10 @@ export default function Login() {
   return (
     <Grid item xs={12} lg={12} md={12}
       alignContent="center"
+      style={{
+        backgroundImage: `url('/assets/images/landing/customer/Login Back Ground.png')`, height: '100vh', backgroundSize: 'cover',
+        backgroundPosition: 'center'
+    }}
     >
       
       <StyledRoot mx="auto" my="2rem" boxShadow="large" borderRadius={8}
@@ -186,10 +189,7 @@ export default function Login() {
         <Box>
 
           <form className="content" onSubmit={handleSubmit}>
-
-
             <Typography textAlign="center" mb="0.5rem">
-
               <Image src="/assets/images/logoWhite.png" height={40}  />
 
             </Typography>
@@ -273,12 +273,11 @@ export default function Login() {
 
           </form>
 
-          <FlexBox justifyContent="center" bg="gray.200" py="19px">
+          <FlexBox justifyContent="center"  py="19px">
             <Link href="/terms-and-conditions">
-              <SemiSpan textAlign="center" pl={4}> By continuing, you agree to our</SemiSpan>
-              <br />
-              <SemiSpan>Agree to our term & conditions policies.</SemiSpan>
-
+            <SemiSpan textAlign="center" pl={4} color="#FFFFFF"> By continuing, you agree to our</SemiSpan>
+                            <br />
+                            <SemiSpan color="#FFFFFF">Agree to our term & conditions policies.</SemiSpan>
               {/* <H6 ml="0.5rem" borderBottom="1px solid" borderColor="gray.900">
             Reset It
           </H6> */}

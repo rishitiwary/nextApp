@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 import Login from "@sections/auth/Login";
-
+import UserLogins from "@sections/auth/UserLogin";
 import Box from "@component/Box";
 import Image from "@component/Image";
 import Icon from "@component/icon/Icon";
@@ -20,8 +20,7 @@ import { useAppContext } from "@context/app-context";
 import StyledHeader from "./styles";
 import UserLoginDialog from "./LoginDialog";
 import Location from "./Location";
-import useAxios from "custom/useAxios";
-import apiList from "@utils/__api__/apiList";
+
 import { defaultLocationResponse, tokens } from "@utils/utils";
 
 
@@ -111,7 +110,7 @@ export default function Header({ isFixed, className, fixed, isMobile }: HeaderPr
             {LOGIN_HANDLE}
           </Link></> : <UserLoginDialog handle={LOGIN_HANDLE}>
             <div>
-              <Login />
+              <UserLogins />
             </div>
           </UserLoginDialog>}
           <Sidenav

@@ -6,14 +6,14 @@ const ProtectedPage: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const userData = localStorage.getItem('userData'); // You can replace this with sessionStorage or cookie as needed
+    const userData = localStorage.getItem('userData'); 
 
     if (!userData) {
-      router.push('/login'); // Redirect to login if no token
+      router.push('/login'); 
     }
   }, [router]);
 
-  return null; // Return null instead of an empty statement
+  return null;  
 };
 
 export default ProtectedPage;
