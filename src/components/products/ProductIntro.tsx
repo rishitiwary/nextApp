@@ -218,6 +218,8 @@ export default function ProductIntro({ id,
 
               {!cartItem?.qty ? (
                 <Button
+                size={30}
+                borderRadius={15}
                   mb="36px"
                   size="small"
                   color="primary"

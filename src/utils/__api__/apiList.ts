@@ -31,6 +31,7 @@ const apiList = {
     SEARCH_MUTLI_POINT:`${baseUrl}/v1/multi-points/search`,
     SEARCH_FRIEND:`${baseUrl}/v1/referal/registration/search`,
     DYNAMIC_PAGES:`${baseUrl}/v1/in/pages/`,
+    PRINT_BILL:`${baseUrl}/v1/in/orders/details?id=`
 
     // EMP_OTP_VERIFICATION: `${baseUrl}/v1/employee/login/phone-verification`,
     // EMP_DETAILS:`${baseUrl}/v1/in/employees`,

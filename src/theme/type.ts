@@ -6,6 +6,7 @@ export type Shadows = string[] & {
   badge?: string;
   border?: string;
   regular?: string;
+  category?:string;
 };
 
 type Colors = typeof colors;

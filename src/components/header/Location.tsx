@@ -122,7 +122,7 @@ const Location = () => {
 
                 {locationResponse && locationResponse.location !== null ? (
                   <>
-                    {localStorage.setItem('locationResponse', JSON.stringify(locationResponse))}
+                    {localStorage.setItem('searchLocationResponse', JSON.stringify(locationResponse))}
                     <p style={{ margin: '10px 0', fontSize: '16px' }}>
                       We can deliver your order in <b>{locationResponse.regularDurationMin}</b> minutes to your location.
                     </p>

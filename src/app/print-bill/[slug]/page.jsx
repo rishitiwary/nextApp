@@ -1,26 +1,18 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-
-
-
+import apiList from "@utils/__api__/apiList";
 import "./InvoiceViewer.css";
-
-
-const PrintBill = ({params}) => {
-
+const PrintBill = ({ params }) => {
   const logo = "/assets/imagess/grozep_logo_black.svg";
-  const jeweloLogo =  "/assets/imagess/jeweloLogo.svg";
+  const jeweloLogo = "/assets/imagess/jeweloLogo.svg";
   const signature = "/assets/imagess/signature.jpeg";
-
-  
- const orderid=params.slug;
+  const orderid = params.slug;
   const [invoiceData, setInvoiceData] = useState(null);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [pdfSrc, setPdfSrc] = useState(null); // State to store PDF source
   const [error, setError] = useState(null);
-  const url = "https://api.grozep.com/";
+
   const isInitialMount = useRef(true);
-  
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
@@ -31,7 +23,7 @@ const PrintBill = ({params}) => {
     const fetchInvoiceData = async () => {
       try {
         const response = await fetch(
-          `${url}v1/in/orders/details?id=${orderid}`
+          `${apiList.PRINT_BILL}${orderid}`
         );
 
         if (response.ok) {
@@ -169,7 +161,7 @@ const PrintBill = ({params}) => {
 
     function handleImageLoad() {
       imagesLoaded += 1;
-      
+
       if (imagesLoaded === imagesToLoad.length) {
         newWindow.print();
       }
@@ -281,22 +273,19 @@ th, td {
 
 <div class="company-info">
 
-<img src="${
-  invoiceData.storeCode === "JHRNC005" ? jeweloLogo : logo
-}" alt="Company Logo" onload="window.handleImageLoad && window.handleImageLoad()">
+<img src="${invoiceData.storeCode === "JHRNC005" ? jeweloLogo : logo
+      }" alt="Company Logo" onload="window.handleImageLoad && window.handleImageLoad()">
  
   <p>Address: ${invoiceData.storeAddress}</p>
-  ${
-    invoiceData.storePhone
-      ? `<p>Phone: ${invoiceData.storePhone}</p>`
-      : `<p>Phone: +91 8448444943</p>`
-  }
+  ${invoiceData.storePhone
+        ? `<p>Phone: ${invoiceData.storePhone}</p>`
+        : `<p>Phone: +91 8448444943</p>`
+      }
   <p>GST No: ${invoiceData.gstNumber}</p>
-  ${
-    invoiceData.storeCode == "JHRNC005"
-      ? ""
-      : ` <p>FSSAI No: 21122112000038</p>`
-  }
+  ${invoiceData.storeCode == "JHRNC005"
+        ? ""
+        : ` <p>FSSAI No: 21122112000038</p>`
+      }
 </div>
 <div class="invoice-info">
   <p><b>Invoice #: ${invoiceData.invoiceId}</b></p>
@@ -321,11 +310,10 @@ th, td {
   </tr>
 </thead>
 <tbody>
-${
-  invoiceData &&
-  invoiceData.orderItem
-    .map(
-      (item, index) => `
+${invoiceData &&
+      invoiceData.orderItem
+        .map(
+          (item, index) => `
         <tr>
             <td>${index + 1}</td>
             <td>${item.itemName}, ${item.size}</td>
@@ -336,9 +324,9 @@ ${
             <td>${item.gst}</td>
             <td>${(item.price * item.quantity).toFixed(2)}</td>
         </tr>`
-    )
-    .join("")
-}
+        )
+        .join("")
+      }
 </tbody>
 </table>
 <div class="total">Total :  ₹ ${totalamounts}</div>
@@ -356,7 +344,7 @@ ${
         </div>
         <div class="acc_details">
         <p class="details_heading">Discount:</p>
-        <p>₹${(invoiceData.billingInfo.itemTotal-invoiceData.billingInfo.subTotal).toFixed(2)}</p>
+        <p>₹${(invoiceData.billingInfo.itemTotal - invoiceData.billingInfo.subTotal).toFixed(2)}</p>
     </div>
         <div class="acc_details">
             <p class="details_heading">Sub Total Amount:</p>
@@ -383,11 +371,10 @@ ${
             <p>₹${invoiceData.billingInfo.returnPoint}</p>
         </div>
         <div class="acc_details">
-            <p class="details_heading">${
-              invoiceData.billingInfo.paymentType === "prepaid"
-                ? "Online Paid Amount"
-                : "Payable Amount"
-            }:</p>
+            <p class="details_heading">${invoiceData.billingInfo.paymentType === "prepaid"
+        ? "Online Paid Amount"
+        : "Payable Amount"
+      }:</p>
             <p>₹${totalamounts}</p>
         </div>
     </div>
@@ -406,8 +393,8 @@ ${
             <tbody>
                 <!-- Render rows for GST details -->
                 ${formattedProductsBySlab
-                  .map(
-                    ({ slab, totalAmount, totalCGST, totalSGST }) => `
+        .map(
+          ({ slab, totalAmount, totalCGST, totalSGST }) => `
                         <tr>
                             <td>${slab}%</td>
                             <td>₹${totalAmount}</td>
@@ -415,8 +402,8 @@ ${
                             <td>₹${totalSGST}</td>
                         </tr>
                     `
-                  )
-                  .join("")}
+        )
+        .join("")}
                 <!-- Line separating GST details from total summary -->
                 <tr>
                     <td colspan="4" style="border-top: 2px solid black;"></td>
@@ -425,23 +412,23 @@ ${
                 <tr>
                     <td>Total</td>
                     <td>₹${formattedProductsBySlab
-                      .reduce(
-                        (acc, curr) => acc + parseFloat(curr.totalAmount),
-                        0
-                      )
-                      .toFixed(2)}</td>
+        .reduce(
+          (acc, curr) => acc + parseFloat(curr.totalAmount),
+          0
+        )
+        .toFixed(2)}</td>
                     <td>₹${formattedProductsBySlab
-                      .reduce(
-                        (acc, curr) => acc + parseFloat(curr.totalCGST),
-                        0
-                      )
-                      .toFixed(2)}</td>
+        .reduce(
+          (acc, curr) => acc + parseFloat(curr.totalCGST),
+          0
+        )
+        .toFixed(2)}</td>
                     <td>₹${formattedProductsBySlab
-                      .reduce(
-                        (acc, curr) => acc + parseFloat(curr.totalSGST),
-                        0
-                      )
-                      .toFixed(2)}</td>
+        .reduce(
+          (acc, curr) => acc + parseFloat(curr.totalSGST),
+          0
+        )
+        .toFixed(2)}</td>
                 </tr>
                 <!-- Add more rows as needed -->
             </tbody>
@@ -452,8 +439,8 @@ ${
 
     
 <p>Tax Amount (inWords) : INR ${totalTaxAmount.toFixed(2)}(${numberToWords(
-      totalTaxAmount.toFixed(2)
-    )}).</p>
+          totalTaxAmount.toFixed(2)
+        )}).</p>
 
 
 
@@ -464,12 +451,11 @@ ${
       <li>Goods once sold cannot br taken back or exchanged.</li>
       <li>We are not the manufacturers,comapny will stand for warranty as per their terms and conditions. </li>
       <li>Subject to local jurisdiction.</li>
-      ${
-        invoiceData.storeCode === 'JHRNC005'
-            ? `<li>7 days exchange policy.</li>
+      ${invoiceData.storeCode === 'JHRNC005'
+        ? `<li>7 days exchange policy.</li>
        <li>12 month warranty on every imitation jewellery.</li>`
-            : ''
-    }
+        : ''
+      }
   </ul>
 </div>
 
@@ -479,12 +465,11 @@ ${
   <img src="${signature}" alt="Authorized Signature">
 </div>
 <div style="clear: both; text-align: center; font-weight: 600;">
-<p>You Saved: ₹ ${(invoiceData.billingInfo.itemTotal-invoiceData.billingInfo.subTotal).toFixed(2)}</p>
-${
-  invoiceData.earnedPoint > '0'
+<p>You Saved: ₹ ${(invoiceData.billingInfo.itemTotal - invoiceData.billingInfo.subTotal).toFixed(2)}</p>
+${invoiceData.earnedPoint > '0'
         ? `<p>You got ${invoiceData.earnedPoint} Point on this purchase</p>`
         : ''
-}
+      }
 <p>Thanks for shopping! 😊</p>
 <p>Visit Again!</p>
  

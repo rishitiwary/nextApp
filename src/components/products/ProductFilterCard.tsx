@@ -1,14 +1,10 @@
 "use client";
 
 import Card from "@component/Card";
-import Avatar from "@component/avatar";
-import Rating from "@component/rating";
 import Divider from "@component/Divider";
 import FlexBox from "@component/FlexBox";
-import CheckBox from "@component/CheckBox";
-import TextField from "@component/text-field";
 import Image from "@component/Image";
-import Typography, { H5, H6, Paragraph, SemiSpan } from "@component/Typography";
+import { H6, SemiSpan } from "@component/Typography";
 import { useEffect, useState } from "react";
 import Grid from "@component/grid/Grid";
 
@@ -23,7 +19,6 @@ type Props = {
 
 export default function ProductFilterCard({ subCat, token, storeCode }: Props) {
   const [subcategories, setSubCategories] = useState([]);
-
   const handleClick = (item) => {
     subCat(item);
   }
@@ -32,8 +27,6 @@ export default function ProductFilterCard({ subCat, token, storeCode }: Props) {
     setSubCategories(JSON.parse(subcategoryList));
   }, []);
 
-
-
   return (
     <Card p="18px 27px" elevation={5} borderRadius={8}>
       <H6 mb="16px">Categories</H6>
@@ -41,7 +34,7 @@ export default function ProductFilterCard({ subCat, token, storeCode }: Props) {
 
         {subcategories && subcategories.map((item, index) =>
           <Grid item lg={12} md={12} xs={6}>
-          <Card p="25px 27px" m={1} elevation={5} borderRadius={8} key={index}>
+          <Card p="25px 27px" m={1} elevation={6}  borderRadius={8} key={index}>
             
             <FlexBox
               justifyContent="center"

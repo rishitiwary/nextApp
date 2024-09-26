@@ -61,7 +61,7 @@ export default function Section2({ moreItems }: Props) {
             });
             return (
 
-              <Grid item lg={3} md={4} sm={6} xs={6} key={ind}>
+              <Grid item lg={2} md={4} sm={6} xs={6} key={ind}>
                 <ProductCard1
                   key={ind}
                   id={item.id}

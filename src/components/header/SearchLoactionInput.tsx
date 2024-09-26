@@ -66,7 +66,7 @@ const SearchLocationInput = ({ setSelectedLocation }) => {
 
   return (
     <div className="search-location-input">
-    
+
       <input
         ref={autoCompleteRef}
         className="form-control"
@@ -75,7 +75,7 @@ const SearchLocationInput = ({ setSelectedLocation }) => {
         value={query}
         width="200px"
       />
-   
+
 
     </div>
   );

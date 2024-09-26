@@ -1,5 +1,4 @@
 "use client"
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Box from "@component/Box";
 import Card from "@component/Card";
@@ -18,7 +17,7 @@ type Props = { categories: Category[] };
 export default function Section3({ categories }: Props) {
   const router = useRouter();
   const handleClick = async (item) => {
-  
+
     const subCategory = JSON.stringify(item.subcategories);
     await localStorage.setItem("subcategories", subCategory);
     await router.push(`/product/search/${(item.name.replace(/[^A-Z0-9]/ig, "-")).toLowerCase()}`);
@@ -38,8 +37,9 @@ export default function Section3({ categories }: Props) {
                 p="0.75rem"
                 display="flex"
                 borderRadius={8}
-                boxShadow="small"
-                alignItems="center">
+                boxShadow="category"
+                alignItems="center"
+              >
                 <Box width={50} height={60}>
                   <NextImage width={52} height={20} alt="fashion" src={item.imageUrl} />
 

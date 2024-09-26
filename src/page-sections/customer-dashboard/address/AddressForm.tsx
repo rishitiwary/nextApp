@@ -19,6 +19,7 @@ type AddressFormProps = { searchParams?: SearchParams; address?: any };
 // ===========================================================
 
 export default function AddressForm({ searchParams }: AddressFormProps) {
+  const searchLocationResponse=localStorage.getItem('searchLocationResponse');
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const router = useRouter();
   const token = tokens();
@@ -67,6 +68,7 @@ export default function AddressForm({ searchParams }: AddressFormProps) {
       await findNearestStore(lat, lng);
       localStorage.removeItem('cart');
       localStorage.removeItem('locationResponse');
+      localStorage.setItem('locationResponse',searchLocationResponse);
       try {
         const datas = {
           label,
@@ -94,7 +96,7 @@ export default function AddressForm({ searchParams }: AddressFormProps) {
             Authorization: `Bearer ${token}`,
           }
         });
-        router.push('/address'); // Redirect after successful submission
+        router.push('/'); // Redirect after successful submission
       } catch (error) {
         console.error("Error submitting address:", error);
       }

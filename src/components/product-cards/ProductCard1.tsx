@@ -109,7 +109,7 @@ const Wrapper = styled(Card)`
     .responsive-image-wrapper {
       position: relative;
       width: 100%;  // Makes the container responsive
-      height: 250px; // Set a fixed height (can adjust this to your needs)
+      height: 150px; // Set a fixed height (can adjust this to your needs)
     }
 
     .responsive-image {
@@ -286,7 +286,7 @@ export default function ProductCard1({
 
 
               <FlexBox alignItems="left" justifyContent="space-between" mt="5px">
-                <Typography>
+                <Typography    className="title">
                   {value} {unit}
                 </Typography>
                 <Typography>
@@ -361,8 +361,8 @@ export default function ProductCard1({
               flexDirection="row-reverse"
               justifyContent={!!cartItem?.qty ? "space-between" : "flex-start"}>
               <Button
+              borderRadius={15}
                 size={30}
-
                 width="100%"
                 padding="3px"
                 color="primary"
