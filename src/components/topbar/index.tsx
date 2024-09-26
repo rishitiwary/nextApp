@@ -1,17 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Menu from "../Menu";
-import Image from "../Image";
 import Icon from "../icon/Icon";
 import FlexBox from "../FlexBox";
-import NavLink from "../nav-link";
-import MenuItem from "../MenuItem";
 import Container from "../Container";
-import { Small } from "../Typography";
+import Typography, { Small } from "../Typography";
 import StyledTopbar from "./styles";
+import Link from "next/link";
 
 export default function Topbar() {
+
 
 
   return (
@@ -20,7 +17,6 @@ export default function Topbar() {
         <FlexBox className="topbar-left">
           <div className="logo">
             <img src="/assets/images/icons/logowhite.svg" alt="logo" />
-            
           </div>
 
           <FlexBox alignItems="center">
@@ -35,13 +31,21 @@ export default function Topbar() {
         </FlexBox>
 
         <FlexBox className="topbar-right" alignItems="center">
-          <NavLink className="link" href="/">
-            Need Help?
-          </NavLink>
+
+          <Link href="/contact-us">
+            <Typography
+              direction="right" >
+              <FlexBox alignItems="center" height="40px">
+
+                <Small fontWeight="600" color="#FFFFFF">  Need Help?</Small>
+
+              </FlexBox>
+            </Typography>
+          </Link>
         </FlexBox>
       </Container>
     </StyledTopbar>
   );
 }
 
- 
+

@@ -1,6 +1,5 @@
-"use client"; // Ensure this component is rendered on the client side
-
-import { Fragment } from "react";
+"use client"
+import { Fragment, Suspense } from "react";
 // GLOBAL CUSTOM COMPONENTS
 import { Card1 } from "@component/Card1";
 import DashboardPageHeader from "@component/layout/DashboardPageHeader";
@@ -28,8 +27,8 @@ const CreateAddressContent = () => {
 
 export default function CreateAddress() {
   return (
-    <div>
+    <Suspense fallback={<div>Loading...</div>}>
       <CreateAddressContent />
-    </div>
+    </Suspense>
   );
 }
