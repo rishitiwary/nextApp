@@ -64,8 +64,8 @@ const Carousel = ({
   naturalSlideWidth = 100,
   naturalSlideHeight = 125,
   isIntrinsicHeight = true,
-  hasMasterSpinner = false,
-  dotGroupMarginTop = "1rem",
+  hasMasterSpinner = true,
+  dotGroupMarginTop = "-6rem",
   arrowButtonColor = "secondary"
 }: CarouselProps) => {
   return (

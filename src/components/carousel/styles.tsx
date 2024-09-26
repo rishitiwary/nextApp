@@ -97,7 +97,7 @@ export const StyledCarousel = styled(
     border-radius: 300px;
     margin: 0.25rem;
     cursor: pointer;
-    border: 1px solid ${({ dotColor }) => dotColor || getTheme("colors.secondary.main")};
+    border: 1px solid ${({ dotColor }) => dotColor || getTheme("colors.secondry.main")};
   }
   .dot:after {
     position: absolute;
@@ -108,7 +108,7 @@ export const StyledCarousel = styled(
     left: 50%;
     border-radius: 300px;
     transform: translate(-50%, -50%) scaleX(0);
-    background: ${({ dotColor }) => dotColor || getTheme("colors.secondary.main")};
+    background: ${({ dotColor }) => dotColor || getTheme("colors.primary.main")};
   }
   .dot-active:after {
     transform: translate(-50%, -50%) scaleX(1);

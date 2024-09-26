@@ -27,7 +27,7 @@ export default function Section1({ carouselData, menuItems, metaData }: Props) {
             spacing="0px"
             infinite={true}
             autoPlay={true}
-            showDots={false}
+            showDots={true}
             visibleSlides={1}
             showArrow={false}
             totalSlides={carouselData.length}>
