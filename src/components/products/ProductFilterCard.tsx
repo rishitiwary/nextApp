@@ -12,8 +12,8 @@ type Props = {
   subCat?: any;
   token?: any;
   storeCode?: any;
-  subcategoryList?:any;
-  setNotificationData?:any;
+  subcategoryList?: any;
+  setNotificationData?: any;
 
 }
 
@@ -34,40 +34,40 @@ export default function ProductFilterCard({ subCat, token, storeCode }: Props) {
 
         {subcategories && subcategories.map((item, index) =>
           <Grid item lg={12} md={12} xs={6}>
-          <Card p="25px 27px" m={1} elevation={6}  borderRadius={8} key={index}>
-            
-            <FlexBox
-              justifyContent="center"
-              alignItems="center"
-              cursor="pointer"
-              onClick={() => handleClick(item.name)}
-            
-            >
-              <Grid item lg={4} sm={4} xs={12}>
-              <Image
-                maxHeight={50}
-                maxWidth={50}
-                src={item.imageUrl}
-                alt={item.name}
-                style={{ borderRadius: 50 }}
-              />
-              </Grid>
-             
-              <Grid item lg={8} sm={8} xs={12}>
-              <SemiSpan style={{ color: 'black' }} pl={2}> {item.name}</SemiSpan>
-              </Grid>
-              
-             
-            </FlexBox>
-          </Card>
-        </Grid>
-        
+            <Card p="25px 27px" m={1} elevation={6} borderRadius={8} key={index}>
+
+              <FlexBox
+                justifyContent="center"
+                alignItems="center"
+                cursor="pointer"
+                onClick={() => handleClick(item.name)}
+
+              >
+                <Grid item lg={4} sm={4} xs={12}>
+                  <Image
+                    maxHeight={50}
+                    maxWidth={50}
+                    src={item.imageUrl}
+                    alt={item.name}
+                    style={{ borderRadius: 50 }}
+                  />
+                </Grid>
+
+                <Grid item lg={8} sm={8} xs={12}>
+                  <SemiSpan style={{ color: 'black' }} pl={2}> {item.name}</SemiSpan>
+                </Grid>
+
+
+              </FlexBox>
+            </Card>
+          </Grid>
+
 
         )}
       </Grid>
       <Divider mt="18px" mb="24px" />
 
-     
+
     </Card>
   );
 }

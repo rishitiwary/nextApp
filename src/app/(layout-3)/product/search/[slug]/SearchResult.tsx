@@ -11,7 +11,7 @@ import FlexBox from "@component/FlexBox";
 import { Button, IconButton } from "@component/buttons";
 import Sidenav from "@component/sidenav/Sidenav";
 import { H5, Paragraph } from "@component/Typography";
-
+import Typography from "@component/Typography";
 import ProductGridView from "@component/products/ProductCard1List";
 import ProductFilterCard from "@component/products/ProductFilterCard";
 import useWindowSize from "@hook/useWindowSize";
@@ -28,7 +28,6 @@ type Props = {
   setNotificationData?: any;
   storeCode?: any;
   token?: any;
-
 };
 // ==============================================================
 
@@ -57,7 +56,6 @@ export default function SearchResult({ sortOptions, productData, subcategory, su
 
         {productData && productData.length === 0 ? <div>
           <FlexBox flexWrap="wrap">
-            Not found any records
 
             <Button variant="outlined" color="primary" m="0.5rem" onClick={handleGoBack}>
               Go Back
@@ -66,6 +64,16 @@ export default function SearchResult({ sortOptions, productData, subcategory, su
           </FlexBox>
         </div> : <div> <H5>Searching for {productData && productData[0].category}</H5>
           <Paragraph color="text.muted">{productData && productData.length} results found</Paragraph></div>}
+
+        {productData && productData.length === 0 ?
+
+          <FlexBox flexWrap="wrap" justifyContent="left">
+            <Typography>
+              Not found any data
+            </Typography>
+          </FlexBox>
+          : null
+        }
 
         <FlexBox alignItems="center" flexWrap="wrap">
 

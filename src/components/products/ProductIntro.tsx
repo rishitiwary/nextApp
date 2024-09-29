@@ -173,12 +173,12 @@ export default function ProductIntro({ id,
         </Grid>
 
         <Grid item md={6} xs={12} alignItems="center">
-          <H1 mb="1rem">{brand.toLocaleUpperCase()}{title.toLocaleUpperCase()}  {!!off && (<SemiSpan color="primary.main" style={{ fontSize: 30 }}>{off}% off</SemiSpan>)} </H1>
-
-          <FlexBox alignItems="center" mb="1rem">
+          <H1 mb="1rem">{!!brand && brand.toLocaleUpperCase()}{title.toLocaleUpperCase()}  {!!off && (<SemiSpan color="primary.main" style={{ fontSize: 30 }}>{off}% off</SemiSpan>)} </H1>
+{!!brand && brand? <FlexBox alignItems="center" mb="1rem">
             <SemiSpan>Brand:</SemiSpan>
             <H6 ml="8px">{brand} </H6>
-          </FlexBox>
+          </FlexBox>:null}
+         
 
           {/* <FlexBox alignItems="center" mb="1rem">
             <SemiSpan>Rated:</SemiSpan>

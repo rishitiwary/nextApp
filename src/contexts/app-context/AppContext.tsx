@@ -35,7 +35,7 @@ const fetchCartData = async () => {
 
     const cartItems = response.data.data.items.map((item: any) => ({
       id: item.productId,
-      slug: item.slug,
+      slug: item.name.replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase(),
       price: item.supplies[0].mrp - item.supplies[0].off,
       imgUrl: item.imageUrl,
       name: item.name,
@@ -46,6 +46,8 @@ const fetchCartData = async () => {
       mrp:item.supplies[0].mrp
       
     }));
+
+    console.log("cart",cartItems);
     
     return cartItems;
   } catch (error) {

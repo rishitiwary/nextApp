@@ -39,10 +39,10 @@ const Cart = () => {
   const [metaData, setMetaData] = useState();
   const [cartData, setCartData] = useState([]);
   const [goodies, setGoodies] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalPriceSaving, setTotalPriceSaving] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0);
-  const [selectedGoodies, setSelectedGoodies] = useState('');
+  const [selectedGoodies, setSelectedGoodies] = useState(0);
 
   const [offerProduct, setOfferProduct] = useState('');
   const [walletAmount, setWalletAmount] = useState(null);
@@ -67,7 +67,7 @@ const Cart = () => {
   const [loader, setLoader] = useState(false);
   const handleClose = () => setShow(false);
 
- 
+
 
   const userInfo = !!state.userInfo && JSON.parse(state.userInfo)?.data;
 
@@ -97,9 +97,11 @@ const Cart = () => {
     return state.cart ? state.cart.reduce((acc, item) => acc + item.mrp * item.qty, 0) : 0;
   }, [state.cart]);
 
+
   //fetch cart data
 
   useEffect(() => {
+
     const locationResponse = localStorage.getItem('locationResponse');
     const userData = localStorage.getItem('userData');
     const metaData = localStorage.getItem('metaData');
@@ -142,15 +144,19 @@ const Cart = () => {
     return supplies.reduce((total: any, supply: any) => total + supply.quantity, 0);
   }, []);
 
+
   //for goodies
 
 
   useEffect(() => {
+    setTotalPrice(getTotalPrice());
+    setTotalPriceSaving(getTotalSavingPrice());
     const validGoodies = goodies.filter((item, index) => {
       const { minAmount, maxAmount, quantity, price } = item.constraints;
       const SavingPrices: any = getTotalSavingPrice() + (price * quantity);
+
       if (getTotalPrice() <= 0) {
-        setSelectedGoodies(null)
+        setSelectedGoodies(0)
         setTotalPrice(getTotalPrice());
         setTotalPriceSaving(getTotalSavingPrice());
 
@@ -166,7 +172,7 @@ const Cart = () => {
 
         setTotalPriceSaving(SavingPrices - price * quantity);
         setTotalPrice(getTotalPrice());
-        setSelectedGoodies(null)
+        setSelectedGoodies(0)
 
         return false;
       }
@@ -178,6 +184,7 @@ const Cart = () => {
 
   //for offer product
   useEffect(() => {
+
     if (totalPrice === undefined || totalPrice <= 0) {
       setGrandTotal(0);
       setOfferProduct(null);
@@ -312,13 +319,12 @@ const Cart = () => {
     }
   }, [buy4EarnPoints]);
   let cartItems = null;
-  if (selectedGoodies !== null) {
+  if (selectedGoodies) {
     const updatedArray = [...cartData, selectedGoodies];
     cartItems = updatedArray.filter(item => item !== null);
   } else {
     cartItems = cartData.filter(item => item !== null);
   }
-
 
 
   const placeOrder = async () => {
@@ -336,8 +342,9 @@ const Cart = () => {
       "point": parseFloat(appliedGP),
       "paymentMode": "postPaid",
       "items": cartItems,
-      "goodyId": !!selectedGoodies && selectedGoodies.id ? selectedGoodies.id : null,
+      "goodyId": !!selectedGoodies && selectedGoodies.id ? selectedGoodies.id : 0,
     };
+
     try {
       const response: any = await axios({
         url: apiList.PLACE_ORDER,
@@ -400,332 +407,334 @@ const Cart = () => {
 
   }, [placeOrderResponse]);
 
+
   return (
-    
-      <Fragment>
-        <ProtectedPage />
-        {grandTotal > 0 ? <Grid container spacing={6}>
-          <Modal show={show} onHide={handleClose} style={{ marginTop: '60px' }}>
 
-            <Modal.Body>
-              <FlexBox
-                justifyContent="space-between"
-                alignItems="center"
-                ml={3}
-                mr={3}
-              >
-                <Typography fontSize={18} fontWeight={600}>Coupons</Typography>
-                <Typography>
-                  <FontAwesomeIcon icon="fa-solid fa-close" onClick={handleClose} />
-                </Typography>
-              </FlexBox>
-              <CouponsComp uniqueCoupons={uniqueCoupons} allCoupons={Coupons} token={token} grandTotal={grandTotal} setPromoDiscount={setPromoDiscount} setGrandTotal={setGrandTotal} setFilterCoupons={setFilterCoupons} setActiveCoupon={setActiveCoupon} setAppliedCoupons={setAppliedCoupons} setApplicableCouponAmount={setApplicableCouponAmount} applicableCouponAmount={applicableCouponAmount} appliedCoupons={appliedCoupons} activeCoupon={activeCoupon} filterCoupons={filterCoupons} setMessageData={setMessageData} applyBP={appliedBP} />
-            </Modal.Body>
-          </Modal>
+    <Fragment>
+      <ProtectedPage />
+      {grandTotal > 0 ? <Grid container spacing={6}>
+        <Modal show={show} onHide={handleClose} style={{ marginTop: '60px' }}>
 
-          <Grid item lg={8} md={8} xs={12}>
-            <ShowMessage messageData={messageData} />
-            <Notification notificatonData={notificatonData} />
-            {!!offerProduct && <OfferProduct
-              mb="1.5rem"
-              id={offerProduct.productId}
-              key={offerProduct.productId}
-              qty={offerProduct.constraints?.quantity}
-              name={offerProduct.name}
-              price={offerProduct.constraints?.price}
-              imgUrl={offerProduct.imageUrl}
-              productVariant={offerProduct.variantId}
-              size={offerProduct.sizes?.value + ' ' + offerProduct.sizes?.unit}
-              currentPrice={offerProduct?.supplies[0].mrp}
-              expDate={offerProduct?.supplies[0].expDate}
-              minAmount={offerProduct.constraints?.minAmount}
-            />}
+          <Modal.Body>
+            <FlexBox
+              justifyContent="space-between"
+              alignItems="center"
+              ml={3}
+              mr={3}
+            >
+              <Typography fontSize={18} fontWeight={600}>Coupons</Typography>
+              <Typography>
+                <FontAwesomeIcon icon="fa-solid fa-close" onClick={handleClose} />
+              </Typography>
+            </FlexBox>
+            <CouponsComp uniqueCoupons={uniqueCoupons} allCoupons={Coupons} token={token} grandTotal={grandTotal} setPromoDiscount={setPromoDiscount} setGrandTotal={setGrandTotal} setFilterCoupons={setFilterCoupons} setActiveCoupon={setActiveCoupon} setAppliedCoupons={setAppliedCoupons} setApplicableCouponAmount={setApplicableCouponAmount} applicableCouponAmount={applicableCouponAmount} appliedCoupons={appliedCoupons} activeCoupon={activeCoupon} filterCoupons={filterCoupons} setMessageData={setMessageData} applyBP={appliedBP} />
+          </Modal.Body>
+        </Modal>
 
-            {cartData && cartData.map((item, index) => {
-              const totalQuantity = calculateTotalQuantity(item.supplies);
+        <Grid item lg={8} md={8} xs={12}>
+          <ShowMessage messageData={messageData} />
+          <Notification notificatonData={notificatonData} />
+          {!!offerProduct && <OfferProduct
+            mb="1.5rem"
+            id={offerProduct.productId}
+            key={offerProduct.productId}
+            qty={offerProduct.constraints?.quantity}
+            name={offerProduct.name}
+            price={offerProduct.constraints?.price}
+            imgUrl={offerProduct.imageUrl}
+            productVariant={offerProduct.variantId}
+            size={offerProduct.sizes?.value + ' ' + offerProduct.sizes?.unit}
+            currentPrice={offerProduct?.supplies[0].mrp}
+            expDate={offerProduct?.supplies[0].expDate}
+            minAmount={offerProduct.constraints?.minAmount}
+          />}
 
-              return (
-                <ProductCard7
-                  mb="1.5rem"
-                  id={item.productId}
-                  key={index}
-                  qty={item.quantity}
-                  slug={item.slug}
-                  name={item.name}
-                  price={item.supplies[0].mrp - item.supplies[0].off}
-                  mrp={item.supplies[0].mrp}
-                  imgUrl={item.imageUrl}
-                  maxQuantity={totalQuantity}
-                  productVariant={item.variantId}
-                  storeCode={storeCode}
-                  token={token}
-                  limit={item.limit}
-                  size={item.size}
-                  setNotificationData={setNotificationData}
-                  brand={item.brand}
-                  setPromoDiscount={setPromoDiscount}
-                  setGrozepPoints={setGrozepPoints}
-                  setBuy4earnPoints={setBuy4earnPoints}
-                  setAppliedCoupons={setAppliedCoupons}
+          {cartData && cartData.map((item, index) => {
 
-                />
+            const totalQuantity = calculateTotalQuantity(item.supplies);
 
-              )
-            }
-            )}
-
-            {!!selectedGoodies &&
-              <GoodiesProduct
+            return (
+              <ProductCard7
                 mb="1.5rem"
-                id={selectedGoodies.productId}
-                key={selectedGoodies.id}
-                qty={selectedGoodies.constraints?.quantity}
-                name={selectedGoodies.name}
-                price={selectedGoodies.constraints?.price}
-                imgUrl={selectedGoodies.imageUrl}
-                productVariant={selectedGoodies.variantId}
-                size={selectedGoodies.sizes?.value + ' ' + selectedGoodies.sizes?.unit}
+                id={item.productId}
+                key={index}
+                qty={item.quantity}
+                slug={item.name.replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase()}
+                name={item.name}
+                price={item.supplies[0].mrp - item.supplies[0].off}
+                mrp={item.supplies[0].mrp}
+                imgUrl={item.imageUrl}
+                maxQuantity={totalQuantity}
+                productVariant={item.variantId}
+                storeCode={storeCode}
+                token={token}
+                limit={item.limit}
+                size={item.size}
+                setNotificationData={setNotificationData}
+                brand={item.brand}
+                setPromoDiscount={setPromoDiscount}
+                setGrozepPoints={setGrozepPoints}
+                setBuy4earnPoints={setBuy4earnPoints}
+                setAppliedCoupons={setAppliedCoupons}
 
-              />}
-          </Grid>
+              />
+
+            )
+          }
+          )}
+
+          {!!selectedGoodies &&
+            <GoodiesProduct
+              mb="1.5rem"
+              id={selectedGoodies.productId}
+              key={selectedGoodies.id}
+              qty={selectedGoodies.constraints?.quantity}
+              name={selectedGoodies.name}
+              price={selectedGoodies.constraints?.price}
+              imgUrl={selectedGoodies.imageUrl}
+              productVariant={selectedGoodies.variantId}
+              size={selectedGoodies.sizes?.value + ' ' + selectedGoodies.sizes?.unit}
+
+            />}
+        </Grid>
 
 
-          <Grid item lg={4} md={4} xs={12}>
-            <Card1 borderRadius={10}>
-              <FlexBox alignItems="center"
-                justifyContent="space-between"
+        <Grid item lg={4} md={4} xs={12}>
+          <Card1 borderRadius={10}>
+            <FlexBox alignItems="center"
+              justifyContent="space-between"
 
-              >
-                <Typography>
-                  <img src="/assets/images/icons/Group.svg" alt="timer" height={30} />
-                </Typography>
-                <Typography fontWeight="700" fontSize={18} mr="10px">
-                  Delivered within {deliveryTime}
-                </Typography>
-                <Typography>
-                  <img src="/assets/images/icons/image 74.png" alt="vehical" height={30} />
-                </Typography>
-              </FlexBox>
+            >
+              <Typography>
+                <img src="/assets/images/icons/Group.svg" alt="timer" height={30} />
+              </Typography>
+              <Typography fontWeight="700" fontSize={18} mr="10px">
+                Delivered within {deliveryTime}
+              </Typography>
+              <Typography>
+                <img src="/assets/images/icons/image 74.png" alt="vehical" height={30} />
+              </Typography>
+            </FlexBox>
 
 
-              <Divider mt={20} />
-              <FlexBox justifyContent="space-between" alignItems="center" mb="1rem" mt={20}>
-                <Typography >Total</Typography>
-                <Typography fontSize="18px" fontWeight="600" lineHeight="1">
-                  <del>{!!totalPriceSaving && currency(totalPriceSaving)}</del> &nbsp; {!!totalPrice && currency(totalPrice)}
-                </Typography>
-              </FlexBox>
-              <Divider mb="1rem" />
+            <Divider mt={20} />
+            <FlexBox justifyContent="space-between" alignItems="center" mb="1rem" mt={20}>
+              <Typography >Total</Typography>
+              <Typography fontSize="18px" fontWeight="600" lineHeight="1">
+                <del>{!!totalPriceSaving && currency(totalPriceSaving)}</del> &nbsp; {!!totalPrice && currency(totalPrice)}
+              </Typography>
+            </FlexBox>
+            <Divider mb="1rem" />
+            <FlexBox justifyContent="space-between" alignItems="center" mb="1rem">
+
+              <Typography >Delivery charge</Typography>
+
+              <Typography fontSize="18px" fontWeight="600" lineHeight="1">
+                + {!!totalPrice && currency((totalPrice > metaData?.minOrderAmount ? 0 : metaData?.deliveryCharge))}
+              </Typography>
+            </FlexBox>
+            {appliedGP ? <><Divider mb="1rem" />
               <FlexBox justifyContent="space-between" alignItems="center" mb="1rem">
 
-                <Typography >Delivery charge</Typography>
+                <Typography >Grozep  Points</Typography>
 
                 <Typography fontSize="18px" fontWeight="600" lineHeight="1">
-                  + {!!totalPrice && currency((totalPrice > metaData?.minOrderAmount ? 0 : metaData?.deliveryCharge))}
+                  - {currency(appliedGP)}
                 </Typography>
-              </FlexBox>
-              {appliedGP ? <><Divider mb="1rem" />
-                <FlexBox justifyContent="space-between" alignItems="center" mb="1rem">
-
-                  <Typography >Grozep  Points</Typography>
-
-                  <Typography fontSize="18px" fontWeight="600" lineHeight="1">
-                    - {currency(appliedGP)}
-                  </Typography>
-                </FlexBox></> : null}
-              {appliedBP ? <><Divider mb="1rem" />
-                <FlexBox justifyContent="space-between" alignItems="center" mb="1rem">
-
-                  <Typography >Buy4earn  Points</Typography>
-
-                  <Typography fontSize="18px" fontWeight="600" lineHeight="1">
-                    - {currency(appliedBP)}
-                  </Typography>
-                </FlexBox></> : null}
-
-              {
-                !!promoDiscount && promoDiscount ? <>  <Divider mb="1rem" />
-                  <FlexBox justifyContent="space-between" alignItems="center" mb="1rem">
-
-                    <Typography >Promo Discount</Typography>
-
-                    <Typography fontSize="18px" fontWeight="600" lineHeight="1">
-                      - {currency(promoDiscount)}
-                    </Typography>
-                  </FlexBox></> : ''
-
-              }
-
-              <Divider mb="1rem" />
-
+              </FlexBox></> : null}
+            {appliedBP ? <><Divider mb="1rem" />
               <FlexBox justifyContent="space-between" alignItems="center" mb="1rem">
-                <Typography >Grand Total</Typography>
+
+                <Typography >Buy4earn  Points</Typography>
 
                 <Typography fontSize="18px" fontWeight="600" lineHeight="1">
-                  {!!grandTotal && currency(grandTotal)}
+                  - {currency(appliedBP)}
                 </Typography>
-              </FlexBox>
+              </FlexBox></> : null}
 
-              {grozepPoints ? null : <>
-                {!!Coupons && Coupons.data.length ?
-                  <>
-                    <Divider mb="1rem" />
-                    <FlexBox alignItems="center"
-                      justifyContent="space-between" mb="1rem">
+            {
+              !!promoDiscount && promoDiscount ? <>  <Divider mb="1rem" />
+                <FlexBox justifyContent="space-between" alignItems="center" mb="1rem">
 
-                      <Typography fontWeight="600" fontSize={17} pr="20px"  >
-                        <img src="/assets/images/icons/Group-1.svg" alt="timer" height={25} style={{ paddingRight: '10px' }} />
-                        Promo Coupons
-                      </Typography>
-                      <Typography>
-                        <Button variant="outlined" color="success" fullwidth borderRadius={30} width={89} height={30} onClick={handleShow}>
-                          Apply
-                        </Button>
-                      </Typography>
-                    </FlexBox>
-                  </>
-                  : null}
+                  <Typography >Promo Discount</Typography>
 
+                  <Typography fontSize="18px" fontWeight="600" lineHeight="1">
+                    - {currency(promoDiscount)}
+                  </Typography>
+                </FlexBox></> : ''
 
-                {walletAmount ? <>
+            }
+
+            <Divider mb="1rem" />
+
+            <FlexBox justifyContent="space-between" alignItems="center" mb="1rem">
+              <Typography >Grand Total</Typography>
+
+              <Typography fontSize="18px" fontWeight="600" lineHeight="1">
+                {!!grandTotal && currency(grandTotal)}
+              </Typography>
+            </FlexBox>
+
+            {grozepPoints ? null : <>
+              {!!Coupons && Coupons.data.length ?
+                <>
                   <Divider mb="1rem" />
                   <FlexBox alignItems="center"
                     justifyContent="space-between" mb="1rem">
-                    <Typography fontWeight="600" fontSize={18} pr="0px"  >
-                      <img src="/assets/images/icons/Wallet Icon.svg" height={25} />
+
+                    <Typography fontWeight="600" fontSize={17} pr="20px"  >
+                      <img src="/assets/images/icons/Group-1.svg" alt="timer" height={25} style={{ paddingRight: '10px' }} />
+                      Promo Coupons
                     </Typography>
-                    {ShowBp ? <Typography fontWeight="600" fontSize={18} pr="20px"  >
-
-                      <TextField type="text"
-                        style={{ borderRight: '0px', borderLeft: '0px', borderTop: '0px', marginLeft: '10px', marginRight: '10px' }}
-                        fullwidth onChange={handleBpInputChange}
-                        value={buy4EarnPoints}
-                        errorText={bpMessage}
-                      />
-
-                    </Typography> : <Typography fontWeight="600" fontSize={17} pr="20px" >
-                      {walletAmount} Buy4earn points
-                    </Typography>}
-
                     <Typography>
-
-                      {ShowBp ?
-                        <>
-
-                          {bpMessage || buy4EarnPoints == 0 ? <Button variant="outlined" color="success" onClick={bpPointButtonsCancel} fullwidth borderRadius={30} width={89} height={30}>
-                            Cancel
-                          </Button> : <Button variant="outlined" color="success" onClick={bpPointButtonApply} fullwidth borderRadius={30} width={89} height={30}>
-                            Confirm
-                          </Button>}
-                        </>
-                        : <Button variant="outlined" color="success" onClick={() => setShowBp(true)} fullwidth borderRadius={30} width={89} height={30}>
-                          Redeem
-                        </Button>}
-
+                      <Button variant="outlined" color="success" fullwidth borderRadius={30} width={89} height={30} onClick={handleShow}>
+                        Apply
+                      </Button>
                     </Typography>
-
                   </FlexBox>
-                </> : null}
+                </>
+                : null}
 
-              </>}
 
-
-              {appliedCoupons.length > 0 || buy4EarnPoints ? null : <>
+              {walletAmount ? <>
                 <Divider mb="1rem" />
                 <FlexBox alignItems="center"
                   justifyContent="space-between" mb="1rem">
-                  <Typography fontWeight="600" fontSize={17} pr="0px"  >
+                  <Typography fontWeight="600" fontSize={18} pr="0px"  >
                     <img src="/assets/images/icons/Wallet Icon.svg" height={25} />
                   </Typography>
-                  {ShowGp ? <Typography fontWeight="600" fontSize={18} pr="20px"  >
+                  {ShowBp ? <Typography fontWeight="600" fontSize={18} pr="20px"  >
+
                     <TextField type="text"
                       style={{ borderRight: '0px', borderLeft: '0px', borderTop: '0px', marginLeft: '10px', marginRight: '10px' }}
-                      fullwidth value={grozepPoints} onChange={handleGpInputChange}
-
-                      errorText={gpMessage}
-
+                      fullwidth onChange={handleBpInputChange}
+                      value={buy4EarnPoints}
+                      errorText={bpMessage}
                     />
+
                   </Typography> : <Typography fontWeight="600" fontSize={17} pr="20px" >
-                    {gp.toFixed(2)} Grozep points
+                    {walletAmount} Buy4earn points
                   </Typography>}
 
                   <Typography>
 
-                    {ShowGp ?
-
+                    {ShowBp ?
                       <>
-                        {gpMessage || grozepPoints == 0 ? <Button variant="outlined" color="success" onClick={gpPointButtonsCancel} fullwidth borderRadius={30} width={89} height={30}>
+
+                        {bpMessage || buy4EarnPoints == 0 ? <Button variant="outlined" color="success" onClick={bpPointButtonsCancel} fullwidth borderRadius={30} width={89} height={30}>
                           Cancel
-                        </Button> : <Button variant="outlined" color="success" onClick={gpPointButtonApply} fullwidth borderRadius={30} width={89} height={30}>
+                        </Button> : <Button variant="outlined" color="success" onClick={bpPointButtonApply} fullwidth borderRadius={30} width={89} height={30}>
                           Confirm
                         </Button>}
-
                       </>
-
-
-                      : <Button variant="outlined" color="success" onClick={() => setShowGp(true)} fullwidth borderRadius={30} width={89} height={30}>
+                      : <Button variant="outlined" color="success" onClick={() => setShowBp(true)} fullwidth borderRadius={30} width={89} height={30}>
                         Redeem
                       </Button>}
 
                   </Typography>
 
                 </FlexBox>
-              </>}
+              </> : null}
+
+            </>}
 
 
+            {appliedCoupons.length > 0 || buy4EarnPoints ? null : <>
+              <Divider mb="1rem" />
               <FlexBox alignItems="center"
-                justifyContent="space-evenly" mb="1rem"
-                backgroundColor='#009FF9'
-                borderRadius={10}
-                height={50}
-                color='#FFFFFF'
-              >
-                <Typography > <img src="/assets/images/icons/Saving Icon.svg" height={25} /></Typography>
-                <Typography fontWeight="600" fontSize={14} pr="20px"  >
-                  You are  saving {currency(totalPriceSaving - totalPrice)} on this purchase.
+                justifyContent="space-between" mb="1rem">
+                <Typography fontWeight="600" fontSize={17} pr="0px"  >
+                  <img src="/assets/images/icons/Wallet Icon.svg" height={25} />
+                </Typography>
+                {ShowGp ? <Typography fontWeight="600" fontSize={18} pr="20px"  >
+                  <TextField type="text"
+                    style={{ borderRight: '0px', borderLeft: '0px', borderTop: '0px', marginLeft: '10px', marginRight: '10px' }}
+                    fullwidth value={grozepPoints} onChange={handleGpInputChange}
+
+                    errorText={gpMessage}
+
+                  />
+                </Typography> : <Typography fontWeight="600" fontSize={17} pr="20px" >
+                  {gp && gp.toFixed(2)} Grozep points
+                </Typography>}
+
+                <Typography>
+
+                  {ShowGp ?
+
+                    <>
+                      {gpMessage || grozepPoints == 0 ? <Button variant="outlined" color="success" onClick={gpPointButtonsCancel} fullwidth borderRadius={30} width={89} height={30}>
+                        Cancel
+                      </Button> : <Button variant="outlined" color="success" onClick={gpPointButtonApply} fullwidth borderRadius={30} width={89} height={30}>
+                        Confirm
+                      </Button>}
+
+                    </>
+
+
+                    : <Button variant="outlined" color="success" onClick={() => setShowGp(true)} fullwidth borderRadius={30} width={89} height={30}>
+                      Redeem
+                    </Button>}
 
                 </Typography>
 
               </FlexBox>
-
-              <Divider mb="1rem" />
-              <Box mt="2rem">
-
-                <Typography fontSize={16} mb={10}>Cancellation Policy</Typography>
-                <Divider mb="1.5rem" />
-                <Typography mb={10}>Call help & support for the order cancellations or returns.We ensure instant refunds for a hassle-free experience.Your satisfaction is our priority.</Typography>
-              </Box>
-              {loader ? <Button variant="contained" color="primary" borderRadius={10} disabled onClick={placeOrder} fullwidth >
-                Place order now
-                &nbsp; <Spinner />
-              </Button> : <Button variant="contained" color="primary" borderRadius={10} onClick={placeOrder} fullwidth >
-                Place order now
-
-              </Button>}
+            </>}
 
 
+            <FlexBox alignItems="center"
+              justifyContent="space-evenly" mb="1rem"
+              backgroundColor='#009FF9'
+              borderRadius={10}
+              height={50}
+              color='#FFFFFF'
+            >
+              <Typography > <img src="/assets/images/icons/Saving Icon.svg" height={25} /></Typography>
+              <Typography fontWeight="600" fontSize={14} pr="20px"  >
+                You are  saving {currency(totalPriceSaving - totalPrice)} on this purchase.
 
-            </Card1>
+              </Typography>
 
-          </Grid>
-        </Grid> :
+            </FlexBox>
+
+            <Divider mb="1rem" />
+            <Box mt="2rem">
+
+              <Typography fontSize={16} mb={10}>Cancellation Policy</Typography>
+              <Divider mb="1.5rem" />
+              <Typography mb={10}>Call help & support for the order cancellations or returns.We ensure instant refunds for a hassle-free experience.Your satisfaction is our priority.</Typography>
+            </Box>
+            {loader ? <Button variant="contained" color="primary" borderRadius={10} disabled onClick={placeOrder} fullwidth >
+              Place order now
+              &nbsp; <Spinner />
+            </Button> : <Button variant="contained" color="primary" borderRadius={10} onClick={placeOrder} fullwidth >
+              Place order now
+
+            </Button>}
 
 
-          <FlexBox
-            alignItems="center"
-            flexDirection="column"
-            justifyContent="center"
-            height="70vh">
-            <Image src="/assets/images/logos/shopping-bag.svg" width={90} height={90} alt="bonik" />
-            <Paragraph mt="1rem" color="text.muted" textAlign="center" maxWidth="200px">
-              Your shopping bag is empty. Start shopping
-            </Paragraph>
-          </FlexBox>
 
-        }
+          </Card1>
 
-      </Fragment>
-   
+        </Grid>
+      </Grid> :
+
+
+        <FlexBox
+          alignItems="center"
+          flexDirection="column"
+          justifyContent="center"
+          height="70vh">
+          <Image src="/assets/images/logos/shopping-bag.svg" width={90} height={90} alt="bonik" />
+          <Paragraph mt="1rem" color="text.muted" textAlign="center" maxWidth="200px">
+            Your shopping bag is empty. Start shopping
+          </Paragraph>
+        </FlexBox>
+
+      }
+
+    </Fragment>
+
   );
 }
 

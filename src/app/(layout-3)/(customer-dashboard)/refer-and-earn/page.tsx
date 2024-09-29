@@ -100,7 +100,7 @@ export default function ReferAndEarn() {
             if (state.userData === null) {
                 router.push("/login");
             }
-        }, 500);
+        }, 100);
         return () => clearTimeout(timer);
     }, [state.userData]);
 
@@ -254,7 +254,7 @@ export default function ReferAndEarn() {
                                 >
 
 
-                                    <Chart data={referalPoinst.data.graphs} />
+                                    <Chart datas={referalPoinst.data.graphs} />
                                 </FlexBox> : null}
 
                         </Grid>

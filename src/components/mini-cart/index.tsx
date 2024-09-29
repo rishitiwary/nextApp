@@ -86,11 +86,11 @@ export default function MiniCart({ toggleSidenav = () => { } }: MiniCartProps) {
 
       if (product.maxQuantity >= quantity) {
         if (product.limit ? product.limit >= quantity : true) {
-            dispatch({
-              type: "CHANGE_CART_AMOUNT",
-              payload: { ...product, qty: quantity }
-            });
-            const res = await handleAddToCart();
+          dispatch({
+            type: "CHANGE_CART_AMOUNT",
+            payload: { ...product, qty: quantity }
+          });
+          const res = await handleAddToCart();
         } else {
           setNotificationData({ 'status': true, 'limit': product.limit });
         }
@@ -132,10 +132,10 @@ export default function MiniCart({ toggleSidenav = () => { } }: MiniCartProps) {
           </FlexBox>
         )}
 
-        {state.cart.map((item,index) => (
-      
-          < Fragment key = { index } >
-           
+        {state.cart.map((item, index) => (
+
+          < Fragment key={index} >
+
             <div className="cart-item">
               <FlexBox alignItems="center" flexDirection="column">
                 <Button
@@ -163,7 +163,7 @@ export default function MiniCart({ toggleSidenav = () => { } }: MiniCartProps) {
                   onClick={handleCartAmountChange(item.qty - 1, item)}
 
                 >
-                    <Icon variant="small">{item.qty===1?'delete':'minus'}</Icon>
+                  <Icon variant="small">{item.qty === 1 ? 'delete' : 'minus'}</Icon>
                 </Button>
               </FlexBox>
 
@@ -190,7 +190,7 @@ export default function MiniCart({ toggleSidenav = () => { } }: MiniCartProps) {
 
                 <Typography fontWeight={600} fontSize="14px" color="primary.main" mt="4px">
                   {currency(item.qty * item.price)}
-                &nbsp; {item.size?`(${item.size})`:''}
+                  &nbsp; {item.size ? `(${item.size})` : ''}
                 </Typography>
               </div>
 
@@ -205,25 +205,25 @@ export default function MiniCart({ toggleSidenav = () => { } }: MiniCartProps) {
             <Divider />
           </Fragment>
         ))}
-    </div>
+      </div>
 
       {
-    !!state.cart.length && (
-      <div className="actions">
-        {/* <Link href="/checkout">
-          <Button fullwidth color="primary" variant="contained" onClick={toggleSidenav}>
-            <Typography fontWeight={600}>Place Order ({currency(getTotalPrice())})</Typography>
-          </Button>
-        </Link> */}
+        !!state.cart.length && (
+          <div className="actions">
 
-        <Link href="/cart">
-          <Button fullwidth color="primary" variant="contained" mt="1rem" borderRadius={10} onClick={toggleSidenav}>
-            <Typography fontWeight={600}>View Cart ({currency(getTotalPrice())})</Typography>
-          </Button>
-        </Link>
-      </div>
-    )
-  }
+            {state.userData ? <Link href="/cart">
+              <Button fullwidth color="primary" variant="contained" mt="1rem" borderRadius={10} onClick={toggleSidenav}>
+                <Typography fontWeight={600}>View Cart  ({currency(getTotalPrice())})</Typography>
+              </Button>
+            </Link> : <Link href="/login">
+              <Button fullwidth color="primary" variant="contained" mt="1rem" borderRadius={10} onClick={toggleSidenav}>
+                <Typography fontWeight={600}>View Cart  ({currency(getTotalPrice())})</Typography>
+              </Button>
+            </Link>}
+
+          </div>
+        )
+      }
     </StyledMiniCart >
   );
 }

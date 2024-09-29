@@ -47,7 +47,13 @@ const Wrapper = styled.div`
 export default function MobileNavigationBar() {
   const width = useWindowSize();
   const { state } = useAppContext();
-
+  const list = [
+    { title: "Home", icon: "home", href: "/" },
+    state.userData
+      ? { title: "Cart", icon: "bag", href: "/cart" }
+      : { title: "Cart", icon: "bag", href: "/login" },
+    { title: "Account", icon: "user-2", href: "/profile" }
+  ];
   if (width <= 900) {
     return (
       <Wrapper>
@@ -78,9 +84,7 @@ export default function MobileNavigationBar() {
   return null;
 }
 
-const list = [
-  { title: "Home", icon: "home", href: "/" },
-  // { title: "Category", icon: "category", href: "/mobile-category-nav" },
-  { title: "Cart", icon: "bag", href: "/cart" },
-  { title: "Account", icon: "user-2", href: "/profile" }
-];
+
+
+
+

@@ -87,7 +87,6 @@ const ProductDetails = ({ params }: Props) => {
   let datas = response;
   if (datas && datas.data[0]) {
     datas = datas.data[0];
-
     !!selectedVariant && selectedVariant.supplies.forEach((q: any) => {
       totalQuantity += q.quantity;
     });

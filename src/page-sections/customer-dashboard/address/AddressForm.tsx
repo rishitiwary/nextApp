@@ -96,7 +96,8 @@ export default function AddressForm({ searchParams }: AddressFormProps) {
             Authorization: `Bearer ${token}`,
           }
         });
-        router.push('/'); // Redirect after successful submission
+        window.location.replace('/');
+   
       } catch (error) {
         console.error("Error submitting address:", error);
       }

@@ -19,9 +19,9 @@ export const customerCareLinks = [
 ];
 
 export const iconList = [
-  { iconName: "facebook", url: "/" },
-  { iconName: "twitter", url: "/" },
-  { iconName: "youtube", url: "/" },
+  { iconName: "facebook", url: "https://www.facebook.com/grozep/" },
+  { iconName: "twitter", url: "https://twitter.com/grozep_official" },
+  { iconName: "youtube", url: "https://www.youtube.com/@grozep" },
   { iconName: "google", url: "/" },
-  { iconName: "instagram", url: "/" }
+  { iconName: "instagram", url: "https://www.instagram.com/grozep_official/" }
 ];
