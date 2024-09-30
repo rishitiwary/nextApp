@@ -65,19 +65,17 @@ const SearchLocationInput = ({ setSelectedLocation }) => {
   }, []);
 
   return (
-    <div className="search-location-input">
-
+  
       <input
         ref={autoCompleteRef}
         className="form-control"
         onChange={(event) => setQuery(event.target.value)}
         placeholder="Search Places ..."
         value={query}
-        width="200px"
+      
+
       />
 
-
-    </div>
   );
 };
 

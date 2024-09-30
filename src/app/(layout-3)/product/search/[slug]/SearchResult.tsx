@@ -17,6 +17,7 @@ import ProductFilterCard from "@component/products/ProductFilterCard";
 import useWindowSize from "@hook/useWindowSize";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Hidden from "@component/hidden";
 // ==============================================================
 type Props = {
   sortOptions: { label: string; value: string }[];
@@ -97,11 +98,15 @@ export default function SearchResult({ sortOptions, productData, subcategory, su
         {/* <Hidden as={Grid} item lg={3} xs={12} down={1024}>
           <ProductFilterCard />
         </Hidden> */}
+    
         <Grid item lg={3} xs={12}>
+          <Hidden down={1024}>
           {productData && productData.length === 0 ? '' :
             <ProductFilterCard subcategoryList={subcategory} subCat={subCat} setNotificationData={setNotificationData} token={token} storeCode={storeCode} />
           }
+          </Hidden>
         </Grid>
+      
 
         <Grid item lg={9} xs={12}>
 

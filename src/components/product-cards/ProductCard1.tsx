@@ -201,8 +201,6 @@ export default function ProductCard1({
     const addToCart = async () => {
       if (maxQuantity >= quantity) {
         if (limit ? limit >= quantity : true) {
-
-
           dispatch({
             type: "CHANGE_CART_AMOUNT",
             payload: {
@@ -346,7 +344,7 @@ export default function ProductCard1({
                   color="primary"
                   variant="outlined"
                   borderColor="primary.light"
-                  onClick={handleCartAmountChange(((cartItem?.qty || 0) - 1), maxQuantity, id, productVariant, limit, value, unit)}>
+                  onClick={handleCartAmountChange(((cartItem?.qty || 0) - 1), maxQuantity, id, productVariant, limit, value, unit,brand)}>
 
                   <Icon variant="small">{cartItem.qty === 1 ? 'delete' : 'minus'}</Icon>
                 </Button>

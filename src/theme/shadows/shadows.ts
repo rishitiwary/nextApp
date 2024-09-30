@@ -29,7 +29,7 @@ const shadows: Shadows = [
   "0px 10px 13px -6px rgba(0, 0, 0, 0.06),0px 20px 31px 3px rgba(0, 0, 0, 0.042),0px 8px 38px 7px rgba(0, 0, 0, 0.036)"
 ];
 
-shadows.small = "0px 1px 3px rgba(3, 0, 71, 0.09)";
+shadows.small = "0px 0px 11px 0px rgba(3, 0, 71, 0.09)";
 shadows.regular = "0px 4px 16px rgba(43, 52, 69, 0.1)";
 shadows.large = "0px 8px 45px rgba(3, 0, 71, 0.09)";
 shadows.border = "0px 0px 28px rgba(3, 0, 71, 0.04)";

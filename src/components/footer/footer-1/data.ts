@@ -12,7 +12,6 @@ export const customerCareLinks = [
   {title:"Help Center",link: "/help-center"},
   {title:"How to Buy",link: "/how-to-buy"},
   {title:"Track Your Order",link: "/track-your-order"},
-  {title:"Corporate & Bulk Purchasing",link: "/corporate-and-bulk-purchasing"},
   {title:"Returns & Refunds",link: "/returns-and-refunds"},
 
  

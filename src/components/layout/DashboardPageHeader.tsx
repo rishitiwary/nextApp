@@ -9,7 +9,7 @@ import { H2 } from "@component/Typography";
 import useWindowSize from "@hook/useWindowSize";
 import Sidenav from "@component/sidenav/Sidenav";
 import DashboardNavigation from "./DashboardNavigation";
-
+import { Button, IconButton } from "@component/buttons";
 // ==============================================================
 export interface DashboardPageHeaderProps {
   title?: string;
@@ -33,7 +33,17 @@ export default function DashboardPageHeader({ iconName, title, button }: Dashboa
         </FlexBox>
 
         {isTablet && (
-          <Sidenav position="left" handle={<Icon mx="1rem">menu</Icon>}>
+          <Sidenav
+            position="left"
+            scroll={true}
+            handle={
+              <IconButton>
+                <Icon>menu</Icon>
+              </IconButton>
+            }
+
+          >
+
             <DashboardNavigation />
           </Sidenav>
         )}
@@ -42,6 +52,7 @@ export default function DashboardPageHeader({ iconName, title, button }: Dashboa
       </FlexBox>
 
       {isTablet && !!button && <Box mt="1rem">{button}</Box>}
+
     </Box>
   );
 }

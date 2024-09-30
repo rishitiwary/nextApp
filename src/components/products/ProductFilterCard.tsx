@@ -4,7 +4,7 @@ import Card from "@component/Card";
 import Divider from "@component/Divider";
 import FlexBox from "@component/FlexBox";
 import Image from "@component/Image";
-import { H6, SemiSpan } from "@component/Typography";
+import Typography, { H6, SemiSpan } from "@component/Typography";
 import { useEffect, useState } from "react";
 import Grid from "@component/grid/Grid";
 
@@ -33,17 +33,18 @@ export default function ProductFilterCard({ subCat, token, storeCode }: Props) {
       <Grid container spacing={6}>
 
         {subcategories && subcategories.map((item, index) =>
-          <Grid item lg={12} md={12} xs={6}>
+          <Grid item lg={12} md={12} xs={12}>
             <Card p="25px 27px" m={1} elevation={6} borderRadius={8} key={index}>
 
               <FlexBox
-                justifyContent="center"
+                justifyContent="space-between"
                 alignItems="center"
                 cursor="pointer"
                 onClick={() => handleClick(item.name)}
+                flexDirection="column"
 
               >
-                <Grid item lg={4} sm={4} xs={12}>
+                <Typography>
                   <Image
                     maxHeight={50}
                     maxWidth={50}
@@ -51,11 +52,11 @@ export default function ProductFilterCard({ subCat, token, storeCode }: Props) {
                     alt={item.name}
                     style={{ borderRadius: 50 }}
                   />
-                </Grid>
-
-                <Grid item lg={8} sm={8} xs={12}>
+                
+                </Typography>
+                <Typography>
                   <SemiSpan style={{ color: 'black' }} pl={2}> {item.name}</SemiSpan>
-                </Grid>
+                  </Typography>
 
 
               </FlexBox>

@@ -102,7 +102,7 @@ if(locationResponse==null){
           fullwidth
           onChange={hanldeSearch}
           className="search-field"
-          placeholder="Search and hit enter..."
+          placeholder="Search Products..."
           value={query}
       
         />

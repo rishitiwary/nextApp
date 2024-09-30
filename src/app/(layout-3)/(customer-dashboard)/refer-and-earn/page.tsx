@@ -104,8 +104,6 @@ export default function ReferAndEarn() {
         return () => clearTimeout(timer);
     }, [state.userData]);
 
-
-
     const infoList: InfoItem[] = [
         { title: "Wallet", imgs: "/assets/images/icons/Wallet Icon.svg" },
         { title: "Offers", imgs: "/assets/images/icons/Offer Icon.svg" },

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from 'react-bootstrap/Modal';
-import { SemiSpan } from '@component/Typography';
+import Typography, { SemiSpan } from '@component/Typography';
 import Container from '@component/Container';
 import apiList from '@utils/__api__/apiList';
 import useAxios from 'custom/useAxios';
@@ -12,6 +12,10 @@ import SearchLocationInput from './SearchLoactionInput';
 import Link from 'next/link';
 import ChangeLocation from './ChangeLocation';
 import Grid from '@component/grid/Grid';
+import { Button } from '@component/buttons';
+import Divider from '@component/Divider';
+import { backgroundColor } from 'styled-system';
+
 
 const Location = () => {
   const { response: locationResponse, error: locationError, loading: locationLoading, fetchData: locationFetchData } = useAxios();
@@ -89,53 +93,61 @@ const Location = () => {
   return (
     <>
       {/* Modal for location */}
-      <Modal show={show} onHide={handleClose} size="lg" centered>
-        <Modal.Body>
-          <Container style={{  padding: '20px' }}>
-            <SemiSpan style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>Change Location</SemiSpan>
+      <Modal show={show} onHide={handleClose} size="lg" centered >
+        <Modal.Header style={{ backgroundColor: '#10AF62' }}>
+          <Typography style={{ fontSize: '1.25rem', fontWeight: 'bold', textAlign: 'center', color: '#FFFFFF' }}>Change Location</Typography>
+        </Modal.Header>
+        <Modal.Body style={{minHeight:'300px'}}>
+          <FlexBox flexDirection="column" justifyContent="space-between" alignItems="center" p={3} >
+            <Grid container spacing={6}>
 
-            <div className="row">
-              <div className="col-lg-12">
-                <p style={{ fontSize: '1rem', marginBottom: '20px' }}>
+              <Grid item xs={12} lg={12} >
+                <Typography fontSize="1rem" fontWeight="bold" textAlign="center" mb={3}>
                   <FontAwesomeIcon icon="fa-solid fa-location-dot" /> &nbsp;Please provide your delivery location to see products at the nearest store.
+                </Typography>
+              </Grid>
+              <Grid item xs={12} lg={6}>
+
+
+                <Button variant="contained" color="primary" fullwidth borderRadius={5} height={35} onClick={getLocation} >
+                  Detect my location
+                </Button>
+
+
+              </Grid>
+
+              <Grid item xs={12} lg={6} >
+                <SearchLocationInput setSelectedLocation={setSelectedLocation} />
+              </Grid>
+            </Grid>
+
+            {locationResponse && locationResponse.location === null ? (
+              <FlexBox justifyContent="center" flexDirection="column" alignItems="center" mt={3}>
+                <Typography fontSize="1.2rem" fontWeight="bold">
+                  Oops!
+                </Typography>
+                <p>
+                  Grozep is not available at <b>{address?.results[0]?.formatted_address}</b>. Please select a different location.
                 </p>
+              </FlexBox>
+            ) : null}
 
-                <div className="d-flex align-items-center justify-content-start">
-                  <button className="btn btn-success btn-sm" onClick={getLocation} style={{ marginRight: '15px' }}>
-                    Detect my location
-                  </button>
-                  <span style={{ margin: '0 10px', border: '1px solid black', borderRadius: '25px', padding: '5px 10px' }}>OR</span>
-                  
-                  <SearchLocationInput setSelectedLocation={setSelectedLocation} />
+            {locationResponse && locationResponse.location !== null ? (
+              <>
+                {localStorage.setItem('searchLocationResponse', JSON.stringify(locationResponse))}
+                <p style={{ margin: '10px 0', fontSize: '16px' }}>
+                  We can deliver your order in <b>{locationResponse.regularDurationMin}</b> minutes to your location.
+                </p>
+                <div className="mt-3">
+                  <Link href={url}>
+                    <button className="btn btn-success btn-sm" onClick={handleClose}>
+                      Edit address details
+                    </button>
+                  </Link>
                 </div>
-              </div>
-
-              <div className="col-lg-12 mt-4">
-                {locationResponse && locationResponse.location === null ? (
-                  <>
-                    <FlexBox flex={1} justifyContent="center" m={20} fontSize={20} fontWeight="bold">
-                      Oops
-                    </FlexBox>
-                    <p>Grozep is not available at <b>{address?.results[0]?.formatted_address}</b>. Please select a different location.</p>
-                  </>
-                ) : null}
-
-                {locationResponse && locationResponse.location !== null ? (
-                  <>
-                    {localStorage.setItem('searchLocationResponse', JSON.stringify(locationResponse))}
-                    <p style={{ margin: '10px 0', fontSize: '16px' }}>
-                      We can deliver your order in <b>{locationResponse.regularDurationMin}</b> minutes to your location.
-                    </p>
-                    <div className="mt-3">
-                      <Link href={url}>
-                        <button className="btn btn-success btn-sm" onClick={handleClose}>Edit address details</button>
-                      </Link>
-                    </div>
-                  </>
-                ) : null}
-              </div>
-            </div>
-          </Container>
+              </>
+            ) : null}
+          </FlexBox>
         </Modal.Body>
       </Modal>
 

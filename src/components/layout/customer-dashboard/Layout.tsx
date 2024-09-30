@@ -7,25 +7,7 @@ import DashboardNavigation from "../DashboardNavigation";
 import { StyledGrid } from "../styles";
 
 export default function CustomerDashboardLayout({ children }: PropsWithChildren) {
-  const [data, setData] = useState(null);
-
-  // Example of client-side data fetching
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch('/api/data'); // Adjust your API endpoint
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
-
-    fetchData();
-  }, []);
+ 
 
   return (
     <Grid container spacing={6}>
@@ -35,8 +17,7 @@ export default function CustomerDashboardLayout({ children }: PropsWithChildren)
 
       <Grid item lg={9} xs={12}>
         {children}
-        {/* Render data or any other logic you need */}
-        {data && <div>{JSON.stringify(data)}</div>} {/* Example rendering */}
+    
       </Grid>
     </Grid>
   );

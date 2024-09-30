@@ -1,6 +1,6 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { MockEndPoints } from "__server__";
+import { MockEndPoints } from "__server__backdd";
 
 // Axios instance
 const axiosInstance = axios.create({

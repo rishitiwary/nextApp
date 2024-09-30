@@ -8,6 +8,7 @@ import NextImage from "@component/NextImage";
 import Typography from "@component/Typography";
 import CategorySectionHeader from "@component/CategorySectionHeader";
 import Category from "@models/category.model";
+import Image from "@component/Image";
 
 
 // ============================================================
@@ -24,12 +25,13 @@ export default function Section3({ categories }: Props) {
   }
   return (
     <Container mb="70px">
-      {!!categories && categories ? <><CategorySectionHeader title="Categories" iconName="categories" />
-
+    {!!categories && categories && (
+      <>
+        <CategorySectionHeader title="Categories" iconName="categories" />
+  
         <Grid container spacing={6}>
           {categories.map((item) => (
-
-            <Grid item lg={2} md={3} sm={6} xs={6} key={item.id} >
+            <Grid item lg={2} md={3} sm={6} xs={6} key={item.id}>
               <Card
                 cursor="pointer"
                 onClick={() => handleClick(item)}
@@ -41,20 +43,24 @@ export default function Section3({ categories }: Props) {
                 alignItems="center"
               >
                 <Box width={50} height={60}>
-                  <NextImage width={52} height={20} alt="fashion" src={item.imageUrl} />
-
+                  {/* <NextImage width={52} height={60} alt={item.title} src={item.imageUrl} /> */}
+                  <Image
+                    alt={item.name}
+                    maxWidth={50}
+                    maxHeight={60}
+                    src={item.imageUrl}
+                  />
                 </Box>
-
+  
                 <Typography fontWeight={600} fontSize={14} ml="8px">
                   {item.name}
                 </Typography>
               </Card>
-
             </Grid>
-
           ))}
-        </Grid></> : null}
-
-    </Container >
+        </Grid>
+      </>
+    )}
+  </Container>
   );
 }

@@ -19,7 +19,7 @@ export default function Table({ loader, token, setLoader, referalPoinst }: any) 
     const [pageNo, setPageNo] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMoreData, setHasMoreData] = useState(true);
-    const bottomRef = useRef<HTMLDivElement>(null); 
+    const bottomRef = useRef<HTMLDivElement>(null);
     const [type, setType] = useState('friend');
     const [transactionType, setTransactionType] = useState(null);
     const [query, setQuery] = useState('');

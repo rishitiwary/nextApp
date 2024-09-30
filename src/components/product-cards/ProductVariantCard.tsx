@@ -15,7 +15,7 @@ import FlexBox from "@component/FlexBox";
 import { Button } from "@component/buttons";
 import NextImage from "@component/NextImage";
 import Card, { CardProps } from "@component/Card";
-import { H3, SemiSpan } from "@component/Typography";
+import Typography, { H3, SemiSpan } from "@component/Typography";
 import ProductQuickView from "@component/products/ProductQuickView";
 import apiList from '@utils/__api__/apiList';
 import { calculateDiscount, currency, getTheme, tokens } from "@utils/utils";
@@ -97,7 +97,18 @@ const Wrapper = styled(Card)`
       align-items: center;
       flex-direction: column;
     }
-  }
+  } 
+    .responsive-image-wrapper {
+      position: relative;
+      width: 100%;  // Makes the container responsive
+      height: 150px; // Set a fixed height (can adjust this to your needs)
+    }
+
+    .responsive-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; // Adjust object fit as necessary (cover, contain, etc.)
+    }
 
   @media only screen and (max-width: 768px) {
     .details {
@@ -201,7 +212,7 @@ export default function ProductVariantCard({
 
       if (maxQuantity >= quantity) {
         if (limit ? limit >= quantity : true) {
-         
+
           dispatch({
             type: "CHANGE_CART_AMOUNT",
             payload: {
@@ -256,7 +267,18 @@ export default function ProductVariantCard({
 
 
           <Link href="#" onClick={() => setSelectedVariantId(vid)}>
-            <Image alt={title} width={277} src={imgUrl} height={250} />
+            <div className="responsive-image-wrapper">
+              <Image
+                alt={title}
+                src={imgUrl}
+                fill
+                objectFit="contain"
+                className="responsive-image"
+
+              />
+            </div>
+
+
           </Link>
         </div>
 
@@ -272,87 +294,110 @@ export default function ProductVariantCard({
                   fontWeight="600"
                   className="title"
                   color="text.secondary">
-                  {title}
+                  {brand} {title}
                 </H3>
               </Link>
 
-              {value} {unit}
-              <FlexBox alignItems="center" mt="10px">
-                <SemiSpan pr="0.5rem" fontWeight="600" color="primary.main">
-                  {currency(offPrice)}
 
-                </SemiSpan>
-
-                {!!off && (
-                  <SemiSpan color="text.muted" fontWeight="600">
-                    <del>{currency(mrp)}</del>
+              <FlexBox alignItems="left" justifyContent="space-between" mt="5px">
+                <Typography className="title">
+                  {value} {unit}
+                </Typography>
+                <Typography>
+                  <SemiSpan pr="0.5rem" color="primary.main">
+                    {currency(offPrice)}
                   </SemiSpan>
-                )}
+
+                  {!!off && (
+                    <SemiSpan color="text.muted" fontWeight="600">
+                      <del>{currency(mrp)}</del>
+                    </SemiSpan>
+                  )}
+                </Typography>
               </FlexBox>
             </Box>
-            {maxQuantity > 0 ?
-              <FlexBox
-                width="80px"
-                alignItems="flex-end"
-                flexDirection="row-reverse"
-                justifyContent={!!cartItem?.qty ? "space-between" : "flex-start"}>
-                {cartItem?.qty >= maxQuantity ? <Button
-                  size="none"
-                  padding="3px"
-                  color="primary"
-                  variant="outlined"
-                  borderColor="primary.light"
-                  disabled
-                >
-                  <Icon variant="small">plus</Icon>
-                </Button> : <Button
-                  size="none"
-                  padding="3px"
-                  color="primary"
-                  variant="outlined"
-                  borderColor="primary.light"
-                  onClick={handleCartAmountChange(((cartItem?.qty || 0) + 1), maxQuantity, id, productVariant, limit, value, unit)}>
-                  <Icon variant="small">plus</Icon>
-                </Button>}
-
-                {!!cartItem?.qty && (
-                  <Fragment>
-                    <SemiSpan color="text.primary" fontWeight="600" padding={1}>
-                      {cartItem.qty}
-                    </SemiSpan>
-
-                    <Button
-                      size="none"
-                      padding="3px"
-                      color="primary"
-                      variant="outlined"
-                      borderColor="primary.light"
-                      onClick={handleCartAmountChange(((cartItem?.qty || 0) - 1), maxQuantity, id, productVariant, limit, value, unit)}>
-                      <Icon variant="small">{cartItem.qty===1?'delete':'minus'}</Icon>
-                    </Button>
-                  </Fragment>
-                )}
-              </FlexBox>
-              : <FlexBox
-                width="100px"
-                alignItems="center"
-                flexDirection="column-reverse"
-                justifyContent={!!cartItem?.qty ? "space-between" : "flex-start"}>
-
-                <Button
-                  size="none"
-                  padding="3px"
-                  color="primary.danger"
-                  variant="contained"
-                  borderColor="primary.light"
-                  borderRadius={10}
-                  width={110}
-                >
-                  Out of stock
-                </Button>
-              </FlexBox>
-            }
           </FlexBox>
+
+          {maxQuantity > 0 ?
+            <FlexBox
+              width="100%"
+              marginTop={3}
+              alignItems="center"
+              flexDirection="row-reverse"
+              justifyContent={!!cartItem?.qty ? "space-between" : "flex-start"}>
+              {cartItem?.qty >= maxQuantity ? <Button
+                size="none"
+                padding="3px"
+                color="primary"
+                variant="outlined"
+                borderColor="primary.light"
+                disabled
+              >
+                <Icon variant="small">plus</Icon>
+              </Button> :
+                <>
+                  {!!cartItem?.qty ? <Button
+                    size="none"
+                    width="30"
+                    padding="3px"
+                    color="primary"
+                    variant="contained"
+                    borderColor="primary.light"
+                    onClick={handleCartAmountChange(((cartItem?.qty || 0) + 1), maxQuantity, id, productVariant, limit, value, unit, brand)}>
+                    <Icon variant="small">plus</Icon>
+
+                  </Button> : <Button
+                    size={30}
+                    width="100%"
+                    padding="3px"
+                    color="primary"
+                    variant="contained"
+                    borderColor="primary.light"
+                    onClick={handleCartAmountChange(((cartItem?.qty || 0) + 1), maxQuantity, id, productVariant, limit, value, unit, brand)}>
+                    {!!cartItem?.qty ? <Icon variant="small">plus</Icon> : 'Add to cart'}
+
+                  </Button>}
+
+
+                </>
+              }
+              {!!cartItem?.qty && (
+                <Fragment>
+                  <SemiSpan color="text.primary" fontWeight="600" padding={1}>
+                    {cartItem.qty}
+                  </SemiSpan>
+
+                  <Button
+                    size="none"
+                    padding="3px"
+                    color="primary"
+                    variant="outlined"
+                    borderColor="primary.light"
+                    onClick={handleCartAmountChange(((cartItem?.qty || 0) - 1), maxQuantity, id, productVariant, limit, value, unit, brand)}>
+                    <Icon variant="small">{cartItem.qty === 1 ? 'delete' : 'minus'}</Icon>
+                  </Button>
+                </Fragment>
+              )}
+            </FlexBox>
+            : <FlexBox
+              width="100%"
+              alignItems="center"
+              flexDirection="column-reverse"
+              justifyContent={!!cartItem?.qty ? "space-between" : "flex-start"}>
+
+              <Button
+                size={30}
+                width="100%"
+                padding="3px"
+                color="primary.danger"
+                variant="contained"
+                borderColor="primary.light"
+              >
+                Out of stock
+              </Button>
+            </FlexBox>
+          }
+
         </div>
       </Wrapper>
 

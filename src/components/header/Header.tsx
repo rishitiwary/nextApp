@@ -91,13 +91,11 @@ export default function Header({ isFixed, className, fixed, isMobile }: HeaderPr
         <div className="container mt-3">
 
           <div className="row">
+           
             {isMobile ? <>{fixed ? null : <Location />}</> : <Location />}
-
-
             <div className="col-lg-8 col-sm-12 col-md-8 col-xs-12">
 
-              <FlexBox justifyContent="center" flex="1 1 0">
-
+              <FlexBox justifyContent="center" flex="1 1 0" >
                 <SearchInputWithCategory />
               </FlexBox>
             </div>

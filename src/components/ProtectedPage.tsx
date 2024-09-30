@@ -1,14 +1,16 @@
 "use client";
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-
+import { useAppContext } from "@context/app-context";
 const ProtectedPage: React.FC = () => {
+  const { state } = useAppContext();
+
   const router = useRouter();
 
   useEffect(() => {
-    const userData = localStorage.getItem('userData'); 
+    const userData =state.userData; 
 
-    if (!userData) {
+    if (userData==null) {
       router.push('/login'); 
     }
   }, [router]);

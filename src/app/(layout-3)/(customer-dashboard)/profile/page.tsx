@@ -16,7 +16,7 @@ import TableRow from "@component/TableRow";
 import Typography, { H3, H5, Small } from "@component/Typography";
 import DashboardPageHeader from "@component/layout/DashboardPageHeader";
 import { useAppContext } from "@context/app-context";
-import { RequestOptions } from "../../../../models/RequestOptions.model";
+
 type UserInfoResponse = {
   data: {
     user: {

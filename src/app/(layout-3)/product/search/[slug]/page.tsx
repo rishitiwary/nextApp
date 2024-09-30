@@ -200,8 +200,6 @@ useEffect(()=>{
        
         {hasMoreData && <div ref={bottomRef} style={{ height: "1px" }} />}
       </>
-
-
     </Box>
   );
 }

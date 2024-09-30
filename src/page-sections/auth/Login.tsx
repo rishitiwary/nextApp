@@ -94,7 +94,6 @@ export default function Login() {
   const findNearestStore = async (defaultAddress) => {
     try {
       await locationFetchData({ url: apiList.NEAREST_STORE + `?lat=${defaultAddress.latitude}&lng=${defaultAddress.longitude}`, method: "GET", data: null, params: null, headers: null });
-
     } catch (error) {
       console.log("Error fetching inventory data:", error);
     }
@@ -180,9 +179,9 @@ export default function Login() {
       style={{
         backgroundImage: `url('/assets/images/landing/customer/Login Back Ground.png')`, height: '100vh', backgroundSize: 'cover',
         backgroundPosition: 'center'
-    }}
+      }}
     >
-      
+
       <StyledRoot mx="auto" my="2rem" boxShadow="large" borderRadius={8}
         style={{ background: '#298F52' }}
       >
@@ -190,7 +189,7 @@ export default function Login() {
 
           <form className="content" onSubmit={handleSubmit}>
             <Typography textAlign="center" mb="0.5rem">
-              <Image src="/assets/images/logoWhite.png" height={40}  />
+              <Image src="/assets/images/logoWhite.png" height={40} />
 
             </Typography>
 
@@ -198,19 +197,19 @@ export default function Login() {
               Online Groceries Shopping
             </Typography>
 
-            <Typography style={{ textTransform: 'capitalize' }} fontSize={15} color="#ffffff" mb={2}>
+            <Typography style={{ textTransform: 'capitalize' }} fontSize={15} color="#ffffff" mb={1}>
 
               {otpVerificationResponse !== null && otpVerificationResponse.status === false ? otpVerificationResponse.error.message : loginResponse !== null ? loginResponse.message : ''}
             </Typography>
             {(loginResponse !== null && loginResponse.status) ? <>
               {/* enter otp form */}
-              <FlexBox justifyContent="center" bg="gray.200" py="19px">
+              <FlexBox justifyContent="center" py="19px">
 
                 <OtpInput
                   value={otp}
                   onChange={setOtp}
                   numInputs={6}
-                  renderSeparator={<span>-</span>}
+                  renderSeparator={<span> </span>}
                   inputType="tel"
                   containerStyle={{ display: 'unset' }}
                   inputStyle={{ width: "3rem", height: "3.2rem", borderRadius: '10px', border: '1px solid black', margin: '2px' }}
@@ -219,8 +218,8 @@ export default function Login() {
 
 
               </FlexBox>
-              <FlexBox justifyContent="left">
-                <Typography mt={1} color="#FFFFFF">
+              <FlexBox justifyContent="center">
+                <Typography mt={0} color="#FFFFFF">
                   <Button
                     type="submit"
                     disabled={!canResend}
@@ -236,7 +235,7 @@ export default function Login() {
                   >
                     Resend OTP {" "} {canResend ? '' : `in ${timer} seconds`}
                   </Button>
-                  
+
                 </Typography>
               </FlexBox>
               <Button mt="1rem" mb="1rem" variant="contained" color="default" borderRadius={20} type="button" onClick={handleVerify} fullwidth>
@@ -273,11 +272,11 @@ export default function Login() {
 
           </form>
 
-          <FlexBox justifyContent="center"  py="19px">
+          <FlexBox justifyContent="center" py="19px">
             <Link href="/terms-and-conditions">
-            <SemiSpan textAlign="center" pl={4} color="#FFFFFF"> By continuing, you agree to our</SemiSpan>
-                            <br />
-                            <SemiSpan color="#FFFFFF">Agree to our term & conditions policies.</SemiSpan>
+              <SemiSpan textAlign="center" pl={4} color="#FFFFFF"> By continuing, you agree to our</SemiSpan>
+              <br />
+              <SemiSpan color="#FFFFFF">Agree to our term & conditions policies.</SemiSpan>
               {/* <H6 ml="0.5rem" borderBottom="1px solid" borderColor="gray.900">
             Reset It
           </H6> */}

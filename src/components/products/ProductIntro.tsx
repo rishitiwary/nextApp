@@ -174,11 +174,11 @@ export default function ProductIntro({ id,
 
         <Grid item md={6} xs={12} alignItems="center">
           <H1 mb="1rem">{!!brand && brand.toLocaleUpperCase()}{title.toLocaleUpperCase()}  {!!off && (<SemiSpan color="primary.main" style={{ fontSize: 30 }}>{off}% off</SemiSpan>)} </H1>
-{!!brand && brand? <FlexBox alignItems="center" mb="1rem">
+          {!!brand && brand ? <FlexBox alignItems="center" mb="1rem">
             <SemiSpan>Brand:</SemiSpan>
             <H6 ml="8px">{brand} </H6>
-          </FlexBox>:null}
-         
+          </FlexBox> : null}
+
 
           {/* <FlexBox alignItems="center" mb="1rem">
             <SemiSpan>Rated:</SemiSpan>
@@ -218,8 +218,8 @@ export default function ProductIntro({ id,
 
               {!cartItem?.qty ? (
                 <Button
-                size={30}
-                borderRadius={15}
+                  size={30}
+                  borderRadius={15}
                   mb="36px"
                   size="small"
                   color="primary"

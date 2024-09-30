@@ -28,7 +28,7 @@ export default function ProductVariant({ products, storeCode, token, setNotifica
     <Box mb="3.75rem">
     <H3 mb="1.5rem">Product Variants</H3>
   
-    <Grid container spacing={8}>
+    <Grid container spacing={6}>
       {products.productVariant.map((item, index) => {
 
       const sizess = sizes.find((items) => {
@@ -44,7 +44,7 @@ export default function ProductVariant({ products, storeCode, token, setNotifica
   
         // Return the JSX for each item
         return (
-          <Grid item lg={3} md={4} sm={6} xs={12} key={item.id}>
+          <Grid item lg={2} md={4} sm={6} xs={6} key={item.id}>
             <ProductVariantCard
               hoverEffect
               vid={index}
@@ -54,7 +54,7 @@ export default function ProductVariant({ products, storeCode, token, setNotifica
               mrp={item.supplies[0].mrp}
               offPrice={item.supplies[0].mrp - item.supplies[0].off}
               title={item.name}
-              brand
+              brand={item.brand}
               off={Math.round((100 * item.supplies[0].off) / item.supplies[0].mrp)}
               images={item.imageURL[0]}
               imgUrl={item.imageURL[0]}
