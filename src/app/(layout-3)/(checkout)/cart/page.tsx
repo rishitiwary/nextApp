@@ -1,5 +1,5 @@
 "use client";
-import { Fragment, useState, useEffect, useMemo, useCallback } from "react";
+import { Fragment, useState, useEffect, useCallback } from "react";
 // GLOBAL CUSTOM COMPONENTS
 import Box from "@component/Box";
 import Modal from 'react-bootstrap/Modal';
