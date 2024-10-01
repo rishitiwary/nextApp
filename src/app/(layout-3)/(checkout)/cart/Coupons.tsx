@@ -10,7 +10,7 @@ import { currency } from "@utils/utils";
 import apiList from "@utils/__api__/apiList";
 import axios from "axios";
 const CouponsComp = ({ uniqueCoupons, allCoupons, token, grandTotal, setPromoDiscount, setGrandTotal, setFilterCoupons, setActiveCoupon, setAppliedCoupons, setApplicableCouponAmount, applicableCouponAmount, appliedCoupons, activeCoupon, filterCoupons, setMessageData, applyBP }) => {
-
+   console.log("applicat",applicableCouponAmount);
 
     useEffect(() => {
         if (applicableCouponAmount == 0 || applicableCouponAmount == false) {
@@ -25,6 +25,7 @@ const CouponsComp = ({ uniqueCoupons, allCoupons, token, grandTotal, setPromoDis
     }
 
     const applyCoupon = async (code: string, value: number, id: number, origin: string) => {
+     
         if (value < applicableCouponAmount - applyBP) {
             try {
                 const response = await axios({
