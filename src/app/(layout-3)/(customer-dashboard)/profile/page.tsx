@@ -17,6 +17,7 @@ import Typography, { H3, H5, Small } from "@component/Typography";
 import DashboardPageHeader from "@component/layout/DashboardPageHeader";
 import { useAppContext } from "@context/app-context";
 import Link from "next/link";
+import Spinner from "@component/Spinner";
 
 type UserInfoResponse = {
   data: {
@@ -78,7 +79,10 @@ export default function Profile() {
     return () => clearTimeout(timer);
   }, [state.userData]);
 
-  if (userInfoLoading) return <div>Loading...</div>;
+  if (userInfoLoading) return <div>
+    <FlexBox justifyContent="center">
+  <Spinner />
+</FlexBox></div>;
 
   const infoList: InfoItem[] = [
     { title: "Wallet", imgs: "/assets/images/icons/Wallet Icon.svg",links:"/wallet" },
@@ -113,7 +117,7 @@ export default function Profile() {
                   alignItems="center"
                 >
                   <div>
-                    <H5 my="0px">{userInfoResponse?.data.user.name}</H5>
+                    <H5 my="0px">{!!userInfoResponse && userInfoResponse?.data.user.name}</H5>
 
                     <FlexBox alignItems="center">
                       <Typography fontSize="14px" color="text.hint">
@@ -121,7 +125,7 @@ export default function Profile() {
                       </Typography>
 
                       <Typography ml="4px" fontSize="14px" color="primary.main">
-                        {userInfoResponse?.data.user.point.toFixed(2)}
+                        {!!userInfoResponse && userInfoResponse?.data.user.point.toFixed(2)}
                       </Typography>
                     </FlexBox>
                   </div>
@@ -131,7 +135,7 @@ export default function Profile() {
                     color="text.hint"
                     letterSpacing="0.2em"
                   >
-                    GRADE: {userInfoResponse?.data.user.grade}
+                    GRADE: {!!userInfoResponse && userInfoResponse?.data.user.grade}
                   </Typography>
                 </FlexBox>
               </Box>
@@ -172,35 +176,35 @@ export default function Profile() {
           <Small color="text.muted" mb="4px">
             Name
           </Small>
-          <span>{userInfoResponse?.data.user.name}</span>
+          <span>{!!userInfoResponse && userInfoResponse?.data.user.name}</span>
         </FlexBox>
 
         <FlexBox flexDirection="column" p="0.5rem">
           <Small color="text.muted" mb="4px">
             GST No
           </Small>
-          <span>{userInfoResponse?.data.user.gst}</span>
+          <span>{!!userInfoResponse && userInfoResponse?.data.user.gst}</span>
         </FlexBox>
 
         <FlexBox flexDirection="column" p="0.5rem">
           <Small color="text.muted" mb="4px">
             Email
           </Small>
-          <span>{userInfoResponse?.data.user.name}</span>
+          <span>{!!userInfoResponse && userInfoResponse?.data.user.name}</span>
         </FlexBox>
 
         <FlexBox flexDirection="column" p="0.5rem">
           <Small color="text.muted" mb="4px" textAlign="left">
             Phone
           </Small>
-          <span>{userInfoResponse?.data.user.phone}</span>
+          <span>{!!userInfoResponse && userInfoResponse?.data.user.phone}</span>
         </FlexBox>
 
         <FlexBox flexDirection="column" p="0.5rem">
           <Small color="text.muted" mb="4px">
             Grade
           </Small>
-          <span>{userInfoResponse?.data.user.grade}</span>
+          <span>{!!userInfoResponse && userInfoResponse?.data.user.grade}</span>
         </FlexBox>
       </TableRow>
     </Fragment>

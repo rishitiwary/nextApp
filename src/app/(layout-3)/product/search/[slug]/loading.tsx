@@ -1,3 +1,8 @@
+import FlexBox from "@component/FlexBox";
+import Spinner from "@component/Spinner";
+
 export default function Loading() {
-  return <h1>Loading...</h1>;
+  return <><FlexBox justifyContent="center">
+  <Spinner />
+</FlexBox></>;
 }

@@ -430,7 +430,6 @@ const Cart = () => {
   }, [placeOrderResponse]);
 
 
-
   return (
 
     <Fragment>
