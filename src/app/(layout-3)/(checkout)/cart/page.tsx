@@ -340,7 +340,7 @@ const Cart = () => {
       "promoDiscount": promoDiscount,
       "loyaltyPoint": parseFloat(appliedBP),
       "point": parseFloat(appliedGP),
-      "paymentMode": "postPaid",
+      "paymentMode": "postpaid",
       "items": cartItems,
       "goodyId": !!selectedGoodies && selectedGoodies.id ? selectedGoodies.id : 0,
     };
