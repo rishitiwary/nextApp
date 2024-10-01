@@ -138,16 +138,31 @@ export default function MiniCart({ toggleSidenav = () => { } }: MiniCartProps) {
 
             <div className="cart-item">
               <FlexBox alignItems="center" flexDirection="column">
-                <Button
+                {item.qty >= item.maxQuantity ? <Button
+                  disabled
+                  size="none"
+                  padding="5px"
+                  color="primary"
+                  variant="outlined"
+                  borderRadius="300px"
+                  borderColor="primary.light">
+                  <Icon variant="small">plus</Icon>
+                </Button> : <Button
+
                   size="none"
                   padding="5px"
                   color="primary"
                   variant="outlined"
                   borderRadius="300px"
                   borderColor="primary.light"
-                  onClick={handleCartAmountChange(item.qty + 1, item)}>
+                  onClick={handleCartAmountChange(item.qty + 1, item)
+
+                  }>
                   <Icon variant="small">plus</Icon>
                 </Button>
+
+                }
+
 
                 <Typography fontWeight={600} fontSize="15px" my="3px">
                   {item.qty}

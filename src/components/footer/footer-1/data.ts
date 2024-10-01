@@ -1,5 +1,5 @@
 export const aboutLinks = [
-  {title:"Careers",link: "/career"},
+  {title:"Careers",link: "/careers"},
   {title:"Our Stores",link: "/our-stores"},
   {title:"Our Cares",link: "/our-cares"},
   {title:"Terms & Conditions",link: "/terms-and-conditions"},

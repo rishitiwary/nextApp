@@ -200,13 +200,13 @@ export default function UserLogins() {
                         </Typography>
                         {(loginResponse !== null && loginResponse.status) ? <>
                             {/* enter otp form */}
-                            <FlexBox justifyContent="center" bg="gray.200" py="19px">
+                            <FlexBox justifyContent="center"  py="19px">
 
                                 <OtpInput
                                     value={otp}
                                     onChange={setOtp}
                                     numInputs={6}
-                                    renderSeparator={<span>-</span>}
+                                    renderSeparator={<span> </span>}
                                     inputType="tel"
                                     containerStyle={{ display: 'unset' }}
                                     inputStyle={{ width: "3rem", height: "3.2rem", borderRadius: '10px', border: '1px solid black', margin: '2px' }}

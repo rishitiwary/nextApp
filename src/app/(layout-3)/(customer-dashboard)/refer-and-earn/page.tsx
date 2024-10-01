@@ -21,10 +21,12 @@ import { Button, IconButton } from "@component/buttons";
 import Icon from "@component/icon/Icon";
 import Table from "@component/table";
 import { margin, marginRight } from "styled-system";
+import Link from "next/link";
 
 type InfoItem = {
     title: string;
     imgs: string;
+    links:string;
 };
 
 export default function ReferAndEarn() {
@@ -105,9 +107,9 @@ export default function ReferAndEarn() {
     }, [state.userData]);
 
     const infoList: InfoItem[] = [
-        { title: "Wallet", imgs: "/assets/images/icons/Wallet Icon.svg" },
-        { title: "Offers", imgs: "/assets/images/icons/Offer Icon.svg" },
-        { title: "Payments", imgs: "/assets/images/icons/Payment Icon.svg" },
+        { title: "Wallet", imgs: "/assets/images/icons/Wallet Icon.svg",links:"/wallet" },
+        { title: "Offers", imgs: "/assets/images/icons/Offer Icon.svg", links:'https://offers.grozep.com/' },
+        { title: "Payments", imgs: "/assets/images/icons/Payment Icon.svg",links:"#" },
     ];
 
     return (
@@ -167,6 +169,7 @@ export default function ReferAndEarn() {
                             <Grid container spacing={4}>
                                 {infoList.map((item) => (
                                     <Grid item lg={4} sm={6} xs={6} key={item.title}>
+                                          <Link href={item.links}>
                                         <FlexBox
                                             as={Card}
                                             height="100%"
@@ -183,6 +186,7 @@ export default function ReferAndEarn() {
                                                 {item.title}
                                             </H3>
                                         </FlexBox>
+                                        </Link>
                                     </Grid>
                                 ))}
                             </Grid>
@@ -260,7 +264,7 @@ export default function ReferAndEarn() {
                         {/* 
                     invit friends */}
                         <Grid item lg={12} md={12} sm={12} xs={12}>
-                            {!!referalPoinst && referalPoinst.data ? <Table referalPoinst={referalPoinst} token={token} setLoader={setLoader} loader={loader} /> : <></>}
+                            {!!referalPoinst && referalPoinst.data ? <Table referalPoinst={referalPoinst} token={token} setLoader={setLoader} loader={loader} userInfoResponse={userInfoResponse} /> : <></>}
 
                         </Grid>
                     </Grid>

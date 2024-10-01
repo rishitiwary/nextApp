@@ -76,7 +76,7 @@ export default function ProductCard7(props: ProductCard7Props) {
   const { id, name, qty, price, imgUrl, slug, maxQuantity, productVariant, token, storeCode, limit, size, setNotificationData, mrp, brand, setPromoDiscount, setGrozepPoints, setBuy4earnPoints, setAppliedCoupons, ...others } = props;
 
   const { dispatch, state } = useAppContext();
-  const cartItem = state.cart.find((item) => item.id === id);
+  const cartItem = state.cart.find((item) => item.productVariant === productVariant);
   const handleCartAmountChange = (quantity: number) => () => {
 
     const handleAddToCart = async () => {

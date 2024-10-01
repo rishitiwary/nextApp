@@ -13,7 +13,7 @@ import { Button, IconButton } from "@component/buttons";
 import StyledSearchBox from '@component/search-box/styled';
 import TextField from '@component/text-field';
 import Box from '@component/Box';
-export default function Table({ loader, token, setLoader, referalPoinst }: any) {
+export default function Table({ loader, token, setLoader, referalPoinst,userInfoResponse }: any) {
 
     const [datas, setDatas] = useState<any[]>([]);
     const [pageNo, setPageNo] = useState(1);
@@ -180,8 +180,8 @@ export default function Table({ loader, token, setLoader, referalPoinst }: any) 
                     justifyContent="space-between"
                 >
 
-                    <Typography>
-                        Invite Friends
+                    <Typography fontSize={14} fontWeight="bold">
+                        Your Referral No. - {!!userInfoResponse && userInfoResponse.data.user.phone}
                     </Typography>
                     <Typography>
                         <Box position="relative" flex="1 1 0" maxWidth="670px" mx="auto">
@@ -208,12 +208,8 @@ export default function Table({ loader, token, setLoader, referalPoinst }: any) 
                     </Typography>
                 </FlexBox>
 
-
-
-            </Grid>
-            <Grid item lg={12} md={12} xs={12}>
-
                 <FlexBox
+                mt={2}
                     as={Card}
                     p="14px 32px"
                     height="100%"

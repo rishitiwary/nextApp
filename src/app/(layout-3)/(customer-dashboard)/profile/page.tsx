@@ -16,6 +16,7 @@ import TableRow from "@component/TableRow";
 import Typography, { H3, H5, Small } from "@component/Typography";
 import DashboardPageHeader from "@component/layout/DashboardPageHeader";
 import { useAppContext } from "@context/app-context";
+import Link from "next/link";
 
 type UserInfoResponse = {
   data: {
@@ -32,6 +33,7 @@ type UserInfoResponse = {
 type InfoItem = {
   title: string;
   imgs: string;
+  links:string;
 };
 
 export default function Profile() {
@@ -79,9 +81,9 @@ export default function Profile() {
   if (userInfoLoading) return <div>Loading...</div>;
 
   const infoList: InfoItem[] = [
-    { title: "Wallet", imgs: "/assets/images/icons/Wallet Icon.svg" },
-    { title: "Offers", imgs: "/assets/images/icons/Offer Icon.svg" },
-    { title: "Payments", imgs: "/assets/images/icons/Payment Icon.svg" },
+    { title: "Wallet", imgs: "/assets/images/icons/Wallet Icon.svg",links:"/wallet" },
+        { title: "Offers", imgs: "/assets/images/icons/Offer Icon.svg", links:'https://offers.grozep.com/' },
+        { title: "Payments", imgs: "/assets/images/icons/Payment Icon.svg",links:"#" },
   ];
 
   return (
@@ -140,6 +142,7 @@ export default function Profile() {
             <Grid container spacing={4}>
               {infoList.map((item) => (
                 <Grid item lg={4} sm={6} xs={6} key={item.title}>
+                  <Link href={item.links}>
                   <FlexBox
                     as={Card}
                     height="100%"
@@ -156,6 +159,7 @@ export default function Profile() {
                       {item.title}
                     </H3>
                   </FlexBox>
+                  </Link>
                 </Grid>
               ))}
             </Grid>
