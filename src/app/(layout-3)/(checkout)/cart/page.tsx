@@ -275,7 +275,7 @@ const Cart = () => {
 
   const bpPointButtonsCancel = () => {
     setGrandTotal((parseFloat(grandTotal) + parseFloat(appliedBP)));
-    setGrozepPoints(0);
+    setBuy4earnPoints(0);
     setApplyBP(0);
     setShowBp(false);
 
@@ -297,40 +297,48 @@ const Cart = () => {
   }
 
   useEffect(() => {
+
     if (appliedGP > 0) {
-      if (grozepPoints == 0 || grozepPoints == null) {
+      if (grozepPoints == null || grozepPoints == 0) {
         setGrandTotal((grandTotal + parseFloat(appliedGP)));
         setGrozepPoints(0);
         setApplyGP(0);
       }
     }
-    if (grozepPoints > gp) {
-      setGpMessage('Insufficient Points! Please check wallet');
-    } else if (!!grandTotal && grozepPoints > grandTotal) {
-      setGpMessage(`You can apply upto ${grandTotal} points`)
-    } else {
-      setGpMessage(null);
+    
+    if(grozepPoints>totalPrice+deliveryCharge){
+      setGpMessage(`You can apply upto ${totalPrice+deliveryCharge} points`)
+    }else{
+      if (grozepPoints > gp ) {
+        setGpMessage('Insufficient Points! Please check wallet');
+      } else {
+        setGpMessage(null);
+      }
     }
+    
+
   }, [grozepPoints]);
 
   useEffect(() => {
-    if(appliedBP>0 || appliedBP==null){
-      setGrandTotal((parseFloat(grandTotal) + parseFloat(appliedBP)));
-      setGrozepPoints(0);
+
+    if (appliedBP !== null && appliedBP > 0) {
+      setGrandTotal((parseFloat(grandTotal || 0) + parseFloat(appliedBP || 0)));
+      setBuy4earnPoints(0);
       setApplyBP(0);
     }
+
     if (buy4EarnPoints > walletAmount) {
-      setBpMessage(`You can apply upto ${walletAmount} points`);
-    }
-    if (applicableCouponAmount == 0) {
-      setApplicableCouponAmount(!!grandTotal && grandTotal - ((grandTotal * allowedPercent) / 100));
-    }
-    if (buy4EarnPoints > applicableCouponAmount) {
-      setBpMessage(`You can apply upto ${applicableCouponAmount} points`);
-    }
-    else {
+      setBpMessage(`You can apply up to ${walletAmount} points`);
+    } else if (buy4EarnPoints > applicableCouponAmount) {
+      setBpMessage(`You can apply up to ${applicableCouponAmount} points`);
+    } else {
       setBpMessage(null);
     }
+
+    if (applicableCouponAmount === 0) {
+      setApplicableCouponAmount(!!grandTotal && grandTotal - ((grandTotal * allowedPercent) / 100));
+    }
+
   }, [buy4EarnPoints]);
   let cartItems = null;
   if (selectedGoodies) {
@@ -627,6 +635,7 @@ const Cart = () => {
                       fullwidth onChange={handleBpInputChange}
                       value={buy4EarnPoints}
                       errorText={bpMessage}
+                      placeholder="0"
                     />
 
                   </Typography> : <Typography fontWeight="600" fontSize={17} pr="20px" >
@@ -667,7 +676,7 @@ const Cart = () => {
                   <TextField type="text"
                     style={{ borderRight: '0px', borderLeft: '0px', borderTop: '0px', marginLeft: '10px', marginRight: '10px' }}
                     fullwidth value={grozepPoints} onChange={handleGpInputChange}
-
+                    placeholder="0"
                     errorText={gpMessage}
 
                   />
