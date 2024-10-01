@@ -305,17 +305,17 @@ const Cart = () => {
         setApplyGP(0);
       }
     }
-    
-    if(grozepPoints>totalPrice+deliveryCharge){
-      setGpMessage(`You can apply upto ${totalPrice+deliveryCharge} points`)
-    }else{
-      if (grozepPoints > gp ) {
+
+    if (grozepPoints > totalPrice + deliveryCharge) {
+      setGpMessage(`You can apply upto ${totalPrice + deliveryCharge} points`)
+    } else {
+      if (grozepPoints > gp) {
         setGpMessage('Insufficient Points! Please check wallet');
       } else {
         setGpMessage(null);
       }
     }
-    
+
 
   }, [grozepPoints]);
 
@@ -633,13 +633,13 @@ const Cart = () => {
                     <TextField type="text"
                       style={{ borderRight: '0px', borderLeft: '0px', borderTop: '0px', marginLeft: '10px', marginRight: '10px' }}
                       fullwidth onChange={handleBpInputChange}
-                      value={buy4EarnPoints}
+                      value={buy4EarnPoints?buy4EarnPoints:''}
                       errorText={bpMessage}
                       placeholder="0"
                     />
 
                   </Typography> : <Typography fontWeight="600" fontSize={17} pr="20px" >
-                    {walletAmount} Buy4earn points
+                    {walletAmount - appliedBP} Buy4earn points
                   </Typography>}
 
                   <Typography>
@@ -675,13 +675,13 @@ const Cart = () => {
                 {ShowGp ? <Typography fontWeight="600" fontSize={18} pr="20px"  >
                   <TextField type="text"
                     style={{ borderRight: '0px', borderLeft: '0px', borderTop: '0px', marginLeft: '10px', marginRight: '10px' }}
-                    fullwidth value={grozepPoints} onChange={handleGpInputChange}
+                    fullwidth value={grozepPoints?grozepPoints:''} onChange={handleGpInputChange}
                     placeholder="0"
                     errorText={gpMessage}
 
                   />
                 </Typography> : <Typography fontWeight="600" fontSize={17} pr="20px" >
-                  {gp && gp.toFixed(2)} Grozep points
+                  {gp && (gp - appliedGP).toFixed(2)} Grozep points
                 </Typography>}
 
                 <Typography>
