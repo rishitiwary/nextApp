@@ -172,7 +172,6 @@ export default function Login() {
   }, [locationResponse]);
 
 
-
   return (
     <Grid item xs={12} lg={12} md={12}
       alignContent="center"
