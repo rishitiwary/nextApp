@@ -13,17 +13,18 @@ import apiList from "@utils/__api__/apiList";
 import useAxios from "custom/useAxios";
 import { tokens } from "@utils/utils";
 import { useRouter } from "next/navigation";
+import CustomLoader from "@component/CustomLoader";
 
 // ===========================================================
 type AddressFormProps = { searchParams?: SearchParams; address?: any };
 // ===========================================================
 
 export default function AddressForm({ searchParams }: AddressFormProps) {
-  const searchLocationResponse=localStorage.getItem('searchLocationResponse');
+
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const router = useRouter();
   const token = tokens();
-  
+  const [loading, setLoading] = useState(false);
   const [lat, setLat] = useState<string | null>(null);
   const [lng, setLng] = useState<string | null>(null);
   const [address, setAddress] = useState({
@@ -35,7 +36,36 @@ export default function AddressForm({ searchParams }: AddressFormProps) {
   const [label, setLabel] = useState('Home');
   const { response: locationResponse, fetchData: locationFetchData } = useAxios();
   const { response: addressResponse, fetchData: addressFetchData } = useAxios();
+  const {
+    response: userInfoResponse,
+    error: userInfoError,
+    loading: userInfoLoading,
+    fetchData: userInfoData,
+  } = useAxios();
 
+  useEffect(() => {
+    const location: any = JSON.parse(localStorage.getItem('locationResponse'));
+    if (location) {
+
+      setLat(location.latitude);
+      setLng(location.longitude);
+    }
+  }, []);
+
+  const handleFetchData = async () => {
+    try {
+      // Call API for user details
+      await userInfoData({
+        url: apiList.USERINFO,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
+  };
   // Define INITIAL_VALUES using useMemo
   const INITIAL_VALUES = useMemo(() => ({
     label,
@@ -64,11 +94,11 @@ export default function AddressForm({ searchParams }: AddressFormProps) {
   });
 
   const handleFormSubmit = async (values: any) => {
+    setLoading(true);
     if (lat && lng) {
       await findNearestStore(lat, lng);
       localStorage.removeItem('cart');
-      localStorage.removeItem('locationResponse');
-      localStorage.setItem('locationResponse',searchLocationResponse);
+      // localStorage.removeItem('locationResponse');
       try {
         const datas = {
           label,
@@ -96,8 +126,10 @@ export default function AddressForm({ searchParams }: AddressFormProps) {
             Authorization: `Bearer ${token}`,
           }
         });
-        window.location.replace('/');
-   
+        handleFetchData();
+
+        setLoading(false);
+
       } catch (error) {
         console.error("Error submitting address:", error);
       }
@@ -111,13 +143,14 @@ export default function AddressForm({ searchParams }: AddressFormProps) {
 
   useEffect(() => {
     if (searchParams.get('lat') && searchParams.get('lng')) {
-      const latitude = searchParams.get('lat');
-      const longitude = searchParams.get('lng');
+      const latitude: any = searchParams.get('lat');
+      const longitude: any = searchParams.get('lng');
       setLat(latitude);
       setLng(longitude);
       localStorage.setItem('lat', latitude);
       localStorage.setItem('lng', longitude);
     } else {
+
       const storedLat = localStorage.getItem('lat');
       const storedLng = localStorage.getItem('lng');
       if (storedLat && storedLng) {
@@ -158,6 +191,13 @@ export default function AddressForm({ searchParams }: AddressFormProps) {
       console.error("Error fetching geocode data:", error);
     }
   };
+
+  useEffect(() => {
+    if (userInfoResponse?.status) {
+      localStorage.setItem("userInfo", JSON.stringify(userInfoResponse));
+      window.location.replace('/');
+    }
+  }, [userInfoResponse]);
 
   return (
     <Formik
@@ -242,7 +282,7 @@ export default function AddressForm({ searchParams }: AddressFormProps) {
             </Grid>
           </Box>
           <Button type="submit" variant="contained" color="primary">
-            Save Changes
+            Save Changes {loading?<div style={{marginLeft:'5px'}}><CustomLoader/></div>:''} 
           </Button>
         </form>
       )}

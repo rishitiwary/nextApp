@@ -21,7 +21,7 @@ import StyledHeader from "./styles";
 import UserLoginDialog from "./LoginDialog";
 import Location from "./Location";
 
-import { defaultLocationResponse, tokens } from "@utils/utils";
+
 
 
 // ====================================================================
@@ -30,7 +30,8 @@ type HeaderProps = { isFixed?: boolean; className?: string; fixed?: boolean; isM
 
 export default function Header({ isFixed, className, fixed, isMobile }: HeaderProps) {
 
-  const locationRes = defaultLocationResponse();
+
+
 
   const { state } = useAppContext();
 

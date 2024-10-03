@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import useAxios from "custom/useAxios";
 import { tokens } from "@utils/utils";
 import apiList from "@utils/__api__/apiList";
+import CustomLoader from "@component/CustomLoader";
 export default  function AddressList() {
  const token=tokens();
   const { response: addressResponse, error: addresError, loading: addressLoading, fetchData: addessGetData } = useAxios();
@@ -47,10 +48,13 @@ export default  function AddressList() {
     handleFetchData();
   },[deleteResponse]);
 
-
+  if (addressLoading) return <div>
+   <CustomLoader/>
+    </div>;
   return (
-    <Suspense fallback="<div>Loading...</div>">
+  
     <Fragment>
+
       <DashboardPageHeader title="My Addresses" iconName="pin_filled" button={<AddNewAddress />} />
 
       {addressResponse && addressResponse.data.map((item) => (
@@ -59,6 +63,6 @@ export default  function AddressList() {
 
       {/* /* <AddressPagination addressList={addressList} /> */}
     </Fragment>
-    </Suspense>
+  
   );
 }

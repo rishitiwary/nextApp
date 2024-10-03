@@ -12,7 +12,6 @@ import Typography, { H3, H5, H6, SemiSpan, Small, Span } from "@component/Typogr
 import useAxios from "custom/useAxios";
 import apiList from "@utils/__api__/apiList";
 import OtpInput from 'react-otp-input';
-import secureLocalStorage from "react-secure-storage";
 // STYLED COMPONENT
 import { StyledRoot } from "./styles";
 import { useEffect, useState } from "react";
@@ -20,7 +19,7 @@ import { useAppContext } from "@context/app-context";
 import Grid from "@component/grid/Grid";
 import { alignItems } from "styled-system";
 import Image from "@component/Image";
-
+import { defaultLocationResponse } from "@utils/utils";
 
 export default function Login() {
   const { state, dispatch } = useAppContext();
@@ -148,6 +147,7 @@ export default function Login() {
   //end fetching cart data
   useEffect(() => {
     if (otpVerificationResponse?.status) {
+    
       localStorage.setItem("userData", JSON.stringify(otpVerificationResponse));
       setToken(otpVerificationResponse.token);
       handleFetchData(otpVerificationResponse.token);

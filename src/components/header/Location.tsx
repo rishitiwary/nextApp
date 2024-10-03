@@ -13,11 +13,11 @@ import Link from 'next/link';
 import ChangeLocation from './ChangeLocation';
 import Grid from '@component/grid/Grid';
 import { Button } from '@component/buttons';
-import Divider from '@component/Divider';
-import { backgroundColor } from 'styled-system';
+import { defaultLocationResponse } from '@utils/utils';
 
 
 const Location = () => {
+
   const { response: locationResponse, error: locationError, loading: locationLoading, fetchData: locationFetchData } = useAxios();
   const [error, setError] = useState(null);
   const [address, setAddress] = useState(null);
@@ -26,10 +26,16 @@ const Location = () => {
     lat: null,
     lng: null,
   });
+useEffect(()=>{
+if(defaultLocationResponse()===null){
+  setShow(true);
+}
+},[]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+ 
   // Fetch nearest store by latitude and longitude
   const fetchData = async () => {
     try {
@@ -107,13 +113,9 @@ const Location = () => {
                 </Typography>
               </Grid>
               <Grid item xs={12} lg={6}>
-
-
                 <Button variant="contained" color="primary" fullwidth borderRadius={5} height={35} onClick={getLocation} >
                   Detect my location
                 </Button>
-
-
               </Grid>
 
               <Grid item xs={12} lg={6} >
@@ -134,7 +136,7 @@ const Location = () => {
 
             {locationResponse && locationResponse.location !== null ? (
               <>
-                {localStorage.setItem('searchLocationResponse', JSON.stringify(locationResponse))}
+                {localStorage.setItem('locationResponse', JSON.stringify(locationResponse))}
                 <p style={{ margin: '10px 0', fontSize: '16px' }}>
                   We can deliver your order in <b>{locationResponse.regularDurationMin}</b> minutes to your location.
                 </p>

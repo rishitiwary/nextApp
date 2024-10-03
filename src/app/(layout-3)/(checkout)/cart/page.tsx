@@ -28,6 +28,7 @@ import ShowMessage from "@component/ShowMessage";
 import Spinner from "@component/Spinner";
 import { useRouter } from "next/navigation";
 import ProtectedPage from "@component/ProtectedPage";
+import Link from "next/link";
 const Cart = () => {
   const router = useRouter();
   const { state } = useAppContext();
@@ -430,6 +431,7 @@ const Cart = () => {
   }, [placeOrderResponse]);
 
 
+
   return (
 
     <Fragment>
@@ -632,7 +634,7 @@ const Cart = () => {
                     <TextField type="text"
                       style={{ borderRight: '0px', borderLeft: '0px', borderTop: '0px', marginLeft: '10px', marginRight: '10px' }}
                       fullwidth onChange={handleBpInputChange}
-                      value={buy4EarnPoints?buy4EarnPoints:''}
+                      value={buy4EarnPoints ? buy4EarnPoints : ''}
                       errorText={bpMessage}
                       placeholder="0"
                     />
@@ -674,7 +676,7 @@ const Cart = () => {
                 {ShowGp ? <Typography fontWeight="600" fontSize={18} pr="20px"  >
                   <TextField type="text"
                     style={{ borderRight: '0px', borderLeft: '0px', borderTop: '0px', marginLeft: '10px', marginRight: '10px' }}
-                    fullwidth value={grozepPoints?grozepPoints:''} onChange={handleGpInputChange}
+                    fullwidth value={grozepPoints ? grozepPoints : ''} onChange={handleGpInputChange}
                     placeholder="0"
                     errorText={gpMessage}
 
@@ -729,13 +731,18 @@ const Cart = () => {
               <Divider mb="1.5rem" />
               <Typography mb={10}>Call help & support for the order cancellations or returns.We ensure instant refunds for a hassle-free experience.Your satisfaction is our priority.</Typography>
             </Box>
-            {loader ? <Button variant="contained" color="primary" borderRadius={10} disabled onClick={placeOrder} fullwidth >
+            {loader ? <Button variant="contained" color="primary" borderRadius={10} disabled fullwidth >
               Place order now
               &nbsp; <Spinner />
-            </Button> : <Button variant="contained" color="primary" borderRadius={10} onClick={placeOrder} fullwidth >
-              Place order now
+            </Button> : <>
+              {defaultAddress == null ? 
+              <Link href="/address/create">
+              <Button variant="contained" color="primary" borderRadius={10} fullwidth>Add Address to proceed </Button></Link> : <Button variant="contained" color="primary" borderRadius={10} onClick={placeOrder} fullwidth >
+                Place order now
 
-            </Button>}
+              </Button>}
+
+            </>}
 
 
 

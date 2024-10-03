@@ -17,6 +17,7 @@ import Typography, { H3, H5, Small } from "@component/Typography";
 import DashboardPageHeader from "@component/layout/DashboardPageHeader";
 import { useAppContext } from "@context/app-context";
 import Link from "next/link";
+import CustomLoader from "@component/CustomLoader";
 
 type UserInfoResponse = {
   data: {
@@ -33,7 +34,7 @@ type UserInfoResponse = {
 type InfoItem = {
   title: string;
   imgs: string;
-  links:string;
+  links: string;
 };
 
 export default function Profile() {
@@ -78,12 +79,15 @@ export default function Profile() {
     return () => clearTimeout(timer);
   }, [state.userData]);
 
-  if (userInfoLoading) return <div>Loading...</div>;
+
+  if (userInfoLoading) return <div>
+   <CustomLoader/>
+    </div>;
 
   const infoList: InfoItem[] = [
-    { title: "Wallet", imgs: "/assets/images/icons/Wallet Icon.svg",links:"/wallet" },
-        { title: "Offers", imgs: "/assets/images/icons/Offer Icon.svg", links:'https://offers.grozep.com/' },
-        { title: "Payments", imgs: "/assets/images/icons/Payment Icon.svg",links:"#" },
+    { title: "Wallet", imgs: "/assets/images/icons/Wallet Icon.svg", links: "/wallet" },
+    { title: "Offers", imgs: "/assets/images/icons/Offer Icon.svg", links: 'https://offers.grozep.com/' },
+    { title: "Payments", imgs: "/assets/images/icons/Payment Icon.svg", links: "#" },
   ];
 
   return (
@@ -143,22 +147,22 @@ export default function Profile() {
               {infoList.map((item) => (
                 <Grid item lg={4} sm={6} xs={6} key={item.title}>
                   <Link href={item.links}>
-                  <FlexBox
-                    as={Card}
-                    height="100%"
-                    p="1rem 1.25rem"
-                    borderRadius={8}
-                    alignItems="center"
-                    flexDirection="column"
-                    justifyContent="center"
-                  >
-                    <Small color="text.muted" textAlign="center">
-                      <img src={item.imgs} alt={item.title} />
-                    </Small>
-                    <H3 color="primary.default" my="5px" fontWeight="600">
-                      {item.title}
-                    </H3>
-                  </FlexBox>
+                    <FlexBox
+                      as={Card}
+                      height="100%"
+                      p="1rem 1.25rem"
+                      borderRadius={8}
+                      alignItems="center"
+                      flexDirection="column"
+                      justifyContent="center"
+                    >
+                      <Small color="text.muted" textAlign="center">
+                        <img src={item.imgs} alt={item.title} />
+                      </Small>
+                      <H3 color="primary.default" my="5px" fontWeight="600">
+                        {item.title}
+                      </H3>
+                    </FlexBox>
                   </Link>
                 </Grid>
               ))}
