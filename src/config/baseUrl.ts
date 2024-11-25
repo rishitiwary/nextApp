@@ -1,4 +1,4 @@
-export const baseUrl='https://testaddpi.grozep.com';
-export const mediaUrl='https://testaddpi.grozep.com';
+export const baseUrl='https://api.grozep.com';
+export const mediaUrl='https://api.grozep.com';
    
  
