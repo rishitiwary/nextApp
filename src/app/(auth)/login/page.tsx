@@ -4,8 +4,8 @@ import Login from "@sections/auth/Login";
 export const metadata: Metadata = {
   title: "Login Now",
   description:
-    "Welcome to grozep",
-  authors: [{ name: "grozep", url: "grozep" }],
+    "Welcome to test",
+  authors: [{ name: "test", url: "test" }],
   keywords: ["grocery"]
 };
 

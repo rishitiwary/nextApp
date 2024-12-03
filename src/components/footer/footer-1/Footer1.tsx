@@ -72,11 +72,11 @@ export default function Footer1() {
                 </Typography>
 
                 <Typography py="0.3rem" color="gray.500">
-                  Email: contactus@grozep.com
+                  Email: abc@gmail.com
                 </Typography>
 
                 <Typography py="0.3rem" mb="1rem" color="gray.500">
-                  Phone: +91 8448444943
+                  Phone: +91 99999999
                 </Typography>
 
                 <FlexBox className="flex" mx="-5px">

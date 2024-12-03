@@ -10,11 +10,11 @@ import StyledContext from "@context/StyledContext";
 const openSans = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Grozep",
+  title: "test",
   description:
-    "Grozep description",
-  authors: [{ name: "grozep", url: "https://grozep.com" }],
-  keywords: ["grozep", "grozep"]
+    "test description",
+  authors: [{ name: "test", url: "https://test.com" }],
+  keywords: ["test", "test"]
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -33,7 +33,7 @@ export default function Pages({ params }: Props) {
     return (
         <Fragment>
             <Container minHeight="100vh">
-                <Grid container spacing={6}>
+                {/* <Grid container spacing={6}>
                     {!!pageResponse && pageResponse.data ?
                         <Grid item xs={12} lg={12} md={12} sm={12}>
                             <Image src={pageResponse.data.image} width="100%" maxHeight={400}  mt={20}/>
@@ -54,7 +54,7 @@ export default function Pages({ params }: Props) {
                         </Grid>
                         : null}
 
-                </Grid>
+                </Grid> */}
             </Container>
         </Fragment>
     );

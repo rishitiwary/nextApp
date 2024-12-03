@@ -279,12 +279,12 @@ th, td {
   <p>Address: ${invoiceData.storeAddress}</p>
   ${invoiceData.storePhone
         ? `<p>Phone: ${invoiceData.storePhone}</p>`
-        : `<p>Phone: +91 8448444943</p>`
+        : `<p>Phone: +91 xxxxxxxxx</p>`
       }
   <p>GST No: ${invoiceData.gstNumber}</p>
   ${invoiceData.storeCode == "JHRNC005"
         ? ""
-        : ` <p>FSSAI No: 21122112000038</p>`
+        : ` <p>FSSAI No: </p>`
       }
 </div>
 <div class="invoice-info">

@@ -21,12 +21,12 @@ export default function Topbar() {
 
           <FlexBox alignItems="center">
             <Icon size="14px">phone-call</Icon>
-            <span>+91 8448444943</span>
+            <span>+91 99999999</span>
           </FlexBox>
 
           <FlexBox alignItems="center" ml="20px">
             <Icon size="14px">mail</Icon>
-            <span>contactus@grozep.com</span>
+            <span>abc@gmail.com</span>
           </FlexBox>
         </FlexBox>
 

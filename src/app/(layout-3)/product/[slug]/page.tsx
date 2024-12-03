@@ -47,7 +47,7 @@ const ProductDetails = ({ params }: Props) => {
     }
   }, [response, selectedVariantId])
 
-
+console.log("responseresponse",response);
   useEffect(() => {
     const locationResponse = localStorage.getItem('locationResponse');
     const userData = localStorage.getItem('userData');
@@ -85,6 +85,7 @@ const ProductDetails = ({ params }: Props) => {
 
   let totalQuantity: number = 0;
   let datas = response;
+  console.log("response",datas);
   if (datas && datas.data[0]) {
     datas = datas.data[0];
     !!selectedVariant && selectedVariant.supplies.forEach((q: any) => {
